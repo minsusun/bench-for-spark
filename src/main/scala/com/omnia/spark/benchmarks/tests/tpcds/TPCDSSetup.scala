@@ -1,6 +1,6 @@
-package com.ibm.crail.benchmarks.tests.tpcds
+package com.omnia.spark.benchmarks.tests.tpcds
 
-import com.ibm.crail.benchmarks.ParseOptions
+import com.omnia.spark.benchmarks.ParseOptions
 import org.apache.spark.sql.SparkSession
 
 /**

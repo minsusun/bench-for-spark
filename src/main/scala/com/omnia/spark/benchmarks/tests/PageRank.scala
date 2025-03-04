@@ -19,9 +19,9 @@
  *
  */
 
-package com.ibm.crail.benchmarks.tests
+package com.omnia.spark.benchmarks.tests
 
-import com.ibm.crail.benchmarks.{Action, Noop, ParseOptions, SQLTest}
+import com.omnia.spark.benchmarks.{Action, Noop, ParseOptions, SQLTest}
 import org.apache.spark.graphx.GraphLoader
 import org.apache.spark.sql.SparkSession
 

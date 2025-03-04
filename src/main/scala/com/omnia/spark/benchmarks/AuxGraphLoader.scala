@@ -1,10 +1,11 @@
 package org.apache.spark.graphx {
-  import com.ibm.crail.benchmarks.LogTrait
+
+  import com.omnia.spark.benchmarks.LogTrait
   import org.apache.spark.SparkContext
   import org.apache.spark.graphx.impl.{EdgePartitionBuilder, GraphImpl}
   import org.apache.spark.storage.StorageLevel
 
-  class AuxGraphLoader extends LogTrait{
+  class AuxGraphLoader extends LogTrait {
     def edgeListFile(
                       sc: SparkContext,
                       path: String,
@@ -12,8 +13,7 @@ package org.apache.spark.graphx {
                       numEdgePartitions: Int = -1,
                       edgeStorageLevel: StorageLevel = StorageLevel.MEMORY_ONLY,
                       vertexStorageLevel: StorageLevel = StorageLevel.MEMORY_ONLY)
-    : Graph[Int, Int] =
-    {
+    : Graph[Int, Int] = {
       // Parse the edge data table directly into edge partitions
       val lines =
         if (numEdgePartitions > 0) {

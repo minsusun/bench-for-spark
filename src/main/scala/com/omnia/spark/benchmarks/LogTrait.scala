@@ -1,4 +1,4 @@
-package com.ibm.crail.benchmarks
+package com.omnia.spark.benchmarks
 
 trait LogTrait {
   private var lastStepTime = System.nanoTime();

@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ibm.crail.benchmarks</groupId>
-  <artifactId>sql-benchmarks</artifactId>
+  <artifactId>bench-for-spark</artifactId>
   <version>1.0</version>
   <name>${project.artifactId}</name>
-  <description>Spark SQL benchmarks</description>
-  <inceptionYear>2017</inceptionYear>
+  <description>Benchmarks for Spark and Spark based applications</description>
+  <inceptionYear>2025</inceptionYear>
 
   <licenses>
     <license>
@@ -16,10 +16,10 @@
   </licenses>
   <developers>
     <developer>
-      <id>atr</id>
-      <name>Animesh Trivedi</name>
-      <email>atr@zurich.ibm.com</email>
-      <organization>IBM Research, Zurich</organization>
+      <id>minsusun</id>
+      <name>Minsu Sun</name>
+      <email>minsu.sun@postech.ac.kr</email>
+      <organization>OMNIA, POSTECH</organization>
     </developer>
   </developers>
 
@@ -141,7 +141,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>com.ibm.crail.benchmarks.Main</mainClass>
+              <mainClass>com.omnia.spark.benchmarks.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -151,7 +151,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.ibm.crail.benchmarks.Main</mainClass>
+              <mainClass>com.omnia.spark.benchmarks.Main</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>

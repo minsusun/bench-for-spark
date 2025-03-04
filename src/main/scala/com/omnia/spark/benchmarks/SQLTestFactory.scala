@@ -18,10 +18,10 @@
  * limitations under the License.
  *
  */
-package com.ibm.crail.benchmarks
+package com.omnia.spark.benchmarks
 
-import com.ibm.crail.benchmarks.tests.tpcds.{SingleTPCDSTest, TPCDSTest}
-import com.ibm.crail.benchmarks.tests.{ConnectedComponents, EquiJoin, PageRank, ParquetConversion, ReadOnly}
+import com.omnia.spark.benchmarks.tests.tpcds.{SingleTPCDSTest, TPCDSTest}
+import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, PageRank, ParquetConversion, ReadOnly}
 import org.apache.spark.sql.SparkSession
 
 object SQLTestFactory {

@@ -18,9 +18,9 @@
  * limitations under the License.
  *
  */
-package com.ibm.crail.benchmarks.tests
+package com.omnia.spark.benchmarks.tests
 
-import com.ibm.crail.benchmarks.{ParseOptions, SQLTest}
+import com.omnia.spark.benchmarks.{ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
 class EquiJoin(val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) {

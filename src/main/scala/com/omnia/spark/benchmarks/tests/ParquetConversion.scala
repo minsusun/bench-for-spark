@@ -1,6 +1,6 @@
-package com.ibm.crail.benchmarks.tests
+package com.omnia.spark.benchmarks.tests
 
-import com.ibm.crail.benchmarks.{LogTrait, ParseOptions, SQLTest}
+import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.graphx.impl.GraphImpl
 import org.apache.spark.graphx.{AuxGraphLoader, Edge, EdgeRDD, Graph, GraphLoader, VertexRDD}
 import org.apache.spark.sql.{SaveMode, SparkSession}

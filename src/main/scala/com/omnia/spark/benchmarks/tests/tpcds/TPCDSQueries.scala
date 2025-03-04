@@ -19,7 +19,7 @@
  *
  */
 
-package com.ibm.crail.benchmarks.tests.tpcds
+package com.omnia.spark.benchmarks.tests.tpcds
 
 /**
   * Created by atr on 04.09.17.

@@ -19,7 +19,7 @@
  *
  */
 
-package com.ibm.crail.benchmarks
+package com.omnia.spark.benchmarks
 
 import org.apache.spark.sql.SparkSession
 

@@ -18,7 +18,7 @@
  * limitations under the License.
  *
  */
-package com.ibm.crail.benchmarks
+package com.omnia.spark.benchmarks
 
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{Dataset, SaveMode, SparkSession}
