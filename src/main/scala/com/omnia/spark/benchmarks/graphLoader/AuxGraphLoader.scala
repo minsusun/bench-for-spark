@@ -41,7 +41,7 @@ package org.apache.spark.graphx {
           }
         }
         Iterator((pid, builder.toEdgePartition))
-      }.persist(edgeStorageLevel).setName("GraphLoader.edgeListFile - edges (%s)".format(path))
+      }.persist(edgeStorageLevel).setName("graphLoader.edgeListFile - edges (%s)".format(path))
       step("[AuxGraphLoader]Edge Partition Build From Textfile")
       edges.count()
 
