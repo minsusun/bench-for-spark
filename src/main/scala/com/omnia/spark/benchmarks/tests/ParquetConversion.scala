@@ -13,7 +13,7 @@ class ParquetConversion (val options: ParseOptions, spark:SparkSession) extends 
       val loader = new AuxGraphLoader()
 
       graph = loader.edgeListFile(spark.sparkContext, options.getInputFiles()(0))
-      loader.step("[AuxGraphLoader]Load Graph")
+      loader.step("[AuxGraphLoader]Build Graph From Edge Partitions")
 
       graph = graph.cache()
       loader.step("[AuxGraphLoader]Graph Cache")
@@ -34,18 +34,6 @@ class ParquetConversion (val options: ParseOptions, spark:SparkSession) extends 
     val edgeParquetName = s"${options.getInputFiles()(0)}.edge.parquet"
     edgeDF.write.mode(SaveMode.Overwrite).parquet(edgeParquetName)
     step("[Edge]Saving Parquet")
-
-    val edgeRDD = spark.read.parquet(edgeParquetName)
-      .rdd
-      .map(row => Edge[Long](row.getLong(0), row.getLong(1)))
-    step("[Edge]Restore RDD from parquet")
-
-    val e = EdgeRDD.fromEdges(edgeRDD)
-    val v = VertexRDD.fromEdges(e, 1, 1)
-    step("Convert to EdgeRDD and VertexRDD")
-
-    val reConstructedGraph = GraphImpl.fromExistingRDDs(v, e).cache()
-    step("[GraphX]Construct Graph with RDDs")
 
     "Ran Parquet Conversion on" + options.getInputFiles()(0) + logToString
   }

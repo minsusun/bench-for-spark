@@ -34,7 +34,7 @@ object Main {
     val options = new ParseOptions()
     options.parse(args)
 
-    val spark = SparkSession.builder.appName("Spark SQL benchmarks").getOrCreate
+    val spark = SparkSession.builder.appName("Spark benchmarks 🙈").getOrCreate
 
     if(options.getDoWarmup) {
       /* here we do the trick that we execute the whole test before */
