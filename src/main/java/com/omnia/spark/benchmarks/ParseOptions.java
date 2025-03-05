@@ -206,7 +206,7 @@ public class ParseOptions {
                 this.auxGraphLoader = true;
             }
             if (cmd.hasOption("gl")) {
-                this.graphLoader = cmd.getOptionValue("if").trim().toLowerCase();
+                this.graphLoader = cmd.getOptionValue("gl").trim().toLowerCase();
             }
 
         } catch (ParseException e) {
