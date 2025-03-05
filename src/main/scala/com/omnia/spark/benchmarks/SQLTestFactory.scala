@@ -40,7 +40,7 @@ object SQLTestFactory {
       new ConnectedComponents(options, spark)
     } else if (options.isParquetConversion) {
       new ParquetConversion(options, spark)
-    } else if (options.isParquetConversion) {
+    } else if (options.isParquetGraphLoadTest) {
       new ParquetGraphLoadTest(options, spark)
     }else {
       throw new Exception("Illegal test name ")
