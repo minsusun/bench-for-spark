@@ -17,7 +17,7 @@ class ParquetGraphLoadTest(val options: ParseOptions, spark:SparkSession) extend
       forceUpdate()
       val _ = graph.cache()
       step("[AuxGraphLoader]Graph Cache")
-    } else {
+    } else if (loaderName.compareToIgnoreCase("parquet") == 0) {
       assert(filePath.endsWith(".parquet"), "😡 Given file is not parquet format")
       val loader = new ParquetGraphLoader()
       val graph = loader.load(spark, filePath)
@@ -25,6 +25,8 @@ class ParquetGraphLoadTest(val options: ParseOptions, spark:SparkSession) extend
       forceUpdate()
       val _ = graph.cache()
       step("[ParquetGraphLoader]Graph Cache");
+    } else {
+      throw new IllegalArgumentException(s"Wrong Graph Loader Name Given ${loaderName}")
     }
     s"Ran Parquet GraphLoadTest(Loader: ${loaderName}" + logToString
   }
