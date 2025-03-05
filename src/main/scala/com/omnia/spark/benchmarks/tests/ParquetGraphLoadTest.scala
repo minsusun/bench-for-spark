@@ -12,17 +12,26 @@ class ParquetGraphLoadTest(val options: ParseOptions, spark:SparkSession) extend
     val filePath: String = options.getInputFiles()(0)
     if (loaderName.compareToIgnoreCase("graphX") == 0 || loaderName.compareToIgnoreCase("aux") == 0) {
       val loader = new AuxGraphLoader()
+
       val graph = loader.edgeListFile(spark.sparkContext, filePath)
+      loader.step("[AuxGraphLoader]Build Graph From Edge Partitions")
+
       concatLog(loader.logToString)
       forceUpdate()
+
       val _ = graph.cache()
       step("[AuxGraphLoader]Graph Cache")
     } else if (loaderName.compareToIgnoreCase("parquet") == 0) {
       assert(filePath.endsWith(".parquet"), "😡 Given file is not parquet format")
+
       val loader = new ParquetGraphLoader()
+
       val graph = loader.load(spark, filePath)
+      loader.step("[ParquetGraphLoader]Reconstruct Graph From Existing RDDs")
+
       concatLog(loader.logToString)
       forceUpdate()
+
       val _ = graph.cache()
       step("[ParquetGraphLoader]Graph Cache");
     } else {
