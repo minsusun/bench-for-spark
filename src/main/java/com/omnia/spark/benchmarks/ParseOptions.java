@@ -123,7 +123,8 @@ public class ParseOptions {
                     /* specific query test */
                     this.tpcdsQuery = this.test;
                 }
-                if(this.isTestPageRank() || this.isTestConnectedComponents()){
+                if(this.isTestPageRank() || this.isTestConnectedComponents() ||
+                        this.isParquetConversion() || this.isParquetGraphLoadTest()){
                     /* for page rank, we have no op */
                     this.action = new Noop();
                 }
