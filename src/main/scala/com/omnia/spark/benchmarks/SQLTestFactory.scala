@@ -21,7 +21,7 @@
 package com.omnia.spark.benchmarks
 
 import com.omnia.spark.benchmarks.tests.tpcds.{SingleTPCDSTest, TPCDSTest}
-import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, PageRank, ParquetConversion, ReadOnly}
+import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, PageRank, ParquetConversion, ParquetGraphLoadTest, ReadOnly}
 import org.apache.spark.sql.SparkSession
 
 object SQLTestFactory {
@@ -40,7 +40,9 @@ object SQLTestFactory {
       new ConnectedComponents(options, spark)
     } else if (options.isParquetConversion) {
       new ParquetConversion(options, spark)
-    } else {
+    } else if (options.isParquetConversion) {
+      new ParquetGraphLoadTest(options, spark)
+    }else {
       throw new Exception("Illegal test name ")
     }
   }

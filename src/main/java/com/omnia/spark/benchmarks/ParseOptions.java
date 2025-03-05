@@ -43,6 +43,7 @@ public class ParseOptions {
     private Map<String, String> inputFormatOptions;
     private Map<String, String> outputFormatOptions;
     private int pageRankIterations = 8;
+    private String graphLoader = "graphx";
     private boolean auxGraphLoader = false;
 
     public ParseOptions(){
@@ -72,6 +73,7 @@ public class ParseOptions {
         options.addOption("of", "outputFormat", true, "output format (where-ever applicable) default: parquet");
         options.addOption("ofo", "outputFormatOptions", true, "output format options as key0,value0,key1,value1...");
         options.addOption("gi", "graphPRIterations", true, "number of iteration for the PageRank algorithm, default " + this.pageRankIterations);
+        options.addOption("gl", "graphLoader", true, "which graph loader to use loading the graph");
         options.addOption("aux", "auxGraphLoader", false, "whether to use auxiliary graph loader");
 
         // set defaults
@@ -202,6 +204,9 @@ public class ParseOptions {
             if (cmd.hasOption("aux")) {
                 this.auxGraphLoader = true;
             }
+            if (cmd.hasOption("gl")) {
+                this.graphLoader = cmd.getOptionValue("if").trim().toLowerCase();
+            }
 
         } catch (ParseException e) {
             errorAbort("Failed to parse command line properties" + e);
@@ -211,7 +216,9 @@ public class ParseOptions {
             errorAbort("ERROR:" + " please specify some input files for the SQL test");
         }
         // check valid test names
-        if(!isTestEquiJoin() && !isTestQuery() && !isTestTPCDS() && !isTestReadOnly() && !isTestPageRank() && !isTestConnectedComponents() && !isParquetConversion()) {
+        if (!isTestEquiJoin() && !isTestQuery() && !isTestTPCDS() &&
+                !isTestReadOnly() && !isTestPageRank() && !isTestConnectedComponents() &&
+                !isParquetConversion() && !isParquetGraphLoadTest()) {
             errorAbort("ERROR: illegal test name : " + this.test);
         }
         /* some sanity checks */
@@ -246,6 +253,10 @@ public class ParseOptions {
 
     public boolean isParquetConversion() {
         return this.test.compareToIgnoreCase("parquet") == 0 || this.test.compareToIgnoreCase("parquetconversion") == 0;
+    }
+
+    public boolean isParquetGraphLoadTest() {
+        return this.test.compareToIgnoreCase("parquetGraphLoadTest") == 0;
     }
 
     public String[] getInputFiles(){
@@ -301,5 +312,9 @@ public class ParseOptions {
 
     public boolean getAuxGraphLoader(){
         return this.auxGraphLoader;
+    }
+
+    public String getGraphLoader(){
+        return this.graphLoader;
     }
 }
