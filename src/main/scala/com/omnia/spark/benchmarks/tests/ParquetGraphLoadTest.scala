@@ -8,9 +8,18 @@ class ParquetGraphLoadTest(val options: ParseOptions, spark:SparkSession) extend
 
   override def execute(): String = {
     val loader = new TestGraphLoader(options, spark)
-    val _ = loader.load()
+    val graph = loader.load()
 
     concatLog(loader.explain)
+    forceUpdate()
+
+    val v = graph.vertices.count()
+    step("[ParquetGraphLoadTest]Count Vertices Number")
+
+    val e = graph.edges.count()
+    step("[ParquetGraphLoadTest]Count Edges Number")
+
+    log(s"Loaded Graph Info: ${v} vertices / ${e} edges")
 
     s"Ran Parquet GraphLoadTest(Loader: ${loader.loaderName})" + logToString
   }
