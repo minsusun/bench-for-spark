@@ -23,7 +23,7 @@ class ParquetGraphLoadTest(val options: ParseOptions, spark:SparkSession) extend
       log(s"Loaded Graph Info: ${v} vertices / ${e} edges")
     }
 
-    s"Ran Parquet GraphLoadTest(Loader: ${loader.loaderName})" + logToString
+    s"Ran Parquet GraphLoadTest(Loader: ${loader.loaderName}) on ${options.getInputFiles()(0)}" + logToString
   }
 
   override def explain(): Unit = println(plainExplain())
