@@ -213,6 +213,11 @@ public class ParseOptions {
                     errorAbort("ERROR: Wrong graph loader: " + this.graphLoader);
                 }
             }
+            else {
+                if (this.inputFiles[0].endsWith(".parquet")) {
+                    this.graphLoader = "parquet";
+                }
+            }
 
         } catch (ParseException e) {
             errorAbort("Failed to parse command line properties" + e);
