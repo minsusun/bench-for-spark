@@ -1,19 +1,13 @@
 package com.omnia.spark.benchmarks
 
 trait LogTrait {
+  private val indentSize = 2;
   private var lastStepTime = System.nanoTime();
-  private var titleString = ""
   private var logString = ""
-
-  def title: String = titleString
-
-  def setTitle(t: String): Unit = {
-    titleString = t
-  }
 
   def step(StepName: String): Unit = {
     val now = System.nanoTime()
-    logString += "\n\t\t\t\tStep '" + StepName + s"': ${(now - lastStepTime)/1000000} ms"
+    logString += "\n" + "\t" * indentSize + "Step '" + StepName + s"': ${(now - lastStepTime)/1000000} ms"
     lastStepTime = now
   }
 
@@ -26,5 +20,4 @@ trait LogTrait {
   }
 
   def logToString: String = logString
-  def logToStringWithTitle: String = title + logString
 }
