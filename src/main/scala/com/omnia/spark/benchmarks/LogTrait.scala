@@ -11,6 +11,10 @@ trait LogTrait {
     lastStepTime = now
   }
 
+  def log(text: String): Unit = {
+    logString += "\n" + "\t" * indentSize + text
+  }
+
   def concatLog(externalLogString: String): Unit = {
     logString += externalLogString
   }
