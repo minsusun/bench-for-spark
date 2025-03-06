@@ -45,6 +45,7 @@ public class ParseOptions {
     private int pageRankIterations = 8;
     private String graphLoader = "graphx";
     private boolean auxGraphLoader = false;
+    private boolean countGraph = false;
 
     public ParseOptions(){
 
@@ -75,6 +76,7 @@ public class ParseOptions {
         options.addOption("gi", "graphPRIterations", true, "number of iteration for the PageRank algorithm, default " + this.pageRankIterations);
         options.addOption("gl", "graphLoader", true, "which graph loader to use loading the graph");
         options.addOption("aux", "auxGraphLoader", false, "whether to use auxiliary graph loader");
+        options.addOption("count", "", false, "whether to count the vertices and edges of the graph");
 
         // set defaults
         this.test = "readOnly";
@@ -218,6 +220,9 @@ public class ParseOptions {
                     this.graphLoader = "parquet";
                 }
             }
+            if (cmd.hasOption("count")) {
+                this.countGraph = true;
+            }
 
         } catch (ParseException e) {
             errorAbort("Failed to parse command line properties" + e);
@@ -327,5 +332,9 @@ public class ParseOptions {
 
     public String getGraphLoader(){
         return this.graphLoader;
+    }
+
+    public boolean getCountGraph() {
+        return this.countGraph;
     }
 }

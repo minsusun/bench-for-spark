@@ -13,13 +13,15 @@ class ParquetGraphLoadTest(val options: ParseOptions, spark:SparkSession) extend
     concatLog(loader.explain)
     forceUpdate()
 
-    val v = graph.vertices.count()
-    step("[ParquetGraphLoadTest]Count Vertices Number")
+    if (options.getCountGraph) {
+      val v = graph.vertices.count()
+      step("[ParquetGraphLoadTest]Count Vertices Number")
 
-    val e = graph.edges.count()
-    step("[ParquetGraphLoadTest]Count Edges Number")
+      val e = graph.edges.count()
+      step("[ParquetGraphLoadTest]Count Edges Number")
 
-    log(s"Loaded Graph Info: ${v} vertices / ${e} edges")
+      log(s"Loaded Graph Info: ${v} vertices / ${e} edges")
+    }
 
     s"Ran Parquet GraphLoadTest(Loader: ${loader.loaderName})" + logToString
   }
