@@ -207,6 +207,11 @@ public class ParseOptions {
             }
             if (cmd.hasOption("gl")) {
                 this.graphLoader = cmd.getOptionValue("gl").trim().toLowerCase();
+                if (this.graphLoader.compareToIgnoreCase("aux") != 0 &&
+                        this.graphLoader.compareToIgnoreCase("parquet") != 0 &&
+                        this.graphLoader.compareToIgnoreCase("graphx") != 0) {
+                    errorAbort("ERROR: Wrong graph loader: " + this.graphLoader);
+                }
             }
 
         } catch (ParseException e) {
