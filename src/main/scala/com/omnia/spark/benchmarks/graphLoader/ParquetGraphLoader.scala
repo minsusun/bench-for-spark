@@ -13,7 +13,7 @@ class ParquetGraphLoader extends LogTrait {
     val pRDD = p.rdd
     step("[ParquetGraphLoader]Parquet => RDD[Row]")
 
-    val eRDD = pRDD.map(row => Edge[Int](row.getInt(0), row.getInt(1)))
+    val eRDD = pRDD.map(row => Edge[Long](row.getLong(0), row.getLong(1)))
     step("[ParquetGraphLoader]RDD[Row] => RDD[Edge]")
 
     val e = EdgeRDD.fromEdges(eRDD)
