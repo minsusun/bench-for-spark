@@ -21,5 +21,5 @@ class PageRank (val options: ParseOptions, spark: SparkSession) extends SQLTest(
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = ""
+  override def plainExplain(): String = s"Page Rank ${options.getPageRankIterations} iterations on ${options.getInputFiles()(0)}"
 }
