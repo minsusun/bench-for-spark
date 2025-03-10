@@ -14,6 +14,9 @@ class TestGraphLoader (val options: ParseOptions, spark: SparkSession) {
     val loaderName = options.getGraphLoader
     val filePath: String = options.getInputFiles()(0)
     if (loaderName.compareToIgnoreCase("graphX") == 0 || loaderName.compareToIgnoreCase("aux") == 0) {
+      if (filePath.endsWith(".parquet")) {
+        throw new IllegalArgumentException("😡 Input file for GraphX(Aux) Graph Loader should not be in parquet format")
+      }
       val loader = new AuxGraphLoader()
 
       val graph = loader.edgeListFile(spark.sparkContext, filePath)
