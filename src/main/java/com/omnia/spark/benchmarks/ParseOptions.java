@@ -46,6 +46,7 @@ public class ParseOptions {
     private String graphLoader = "graphx";
     private boolean auxGraphLoader = false;
     private boolean countGraph = false;
+    private boolean naiveImplementation = false;
 
     public ParseOptions(){
 
@@ -77,6 +78,7 @@ public class ParseOptions {
         options.addOption("gl", "graphLoader", true, "which graph loader to use loading the graph");
         options.addOption("aux", "auxGraphLoader", false, "whether to use auxiliary graph loader");
         options.addOption("count", "", false, "whether to count the vertices and edges of the graph");
+        options.addOption("naive", "", false, "use naive implementation if available");
 
         // set defaults
         this.test = "readOnly";
@@ -218,6 +220,9 @@ public class ParseOptions {
             if (cmd.hasOption("count")) {
                 this.countGraph = true;
             }
+            if (cmd.hasOption("naive")) {
+                this.naiveImplementation = true;
+            }
 
         } catch (ParseException e) {
             errorAbort("Failed to parse command line properties" + e);
@@ -335,5 +340,9 @@ public class ParseOptions {
 
     public boolean getCountGraph() {
         return this.countGraph;
+    }
+
+    public boolean getNaiveImplementation() {
+        return this.naiveImplementation;
     }
 }

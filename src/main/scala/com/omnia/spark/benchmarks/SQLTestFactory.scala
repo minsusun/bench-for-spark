@@ -21,7 +21,7 @@
 package com.omnia.spark.benchmarks
 
 import com.omnia.spark.benchmarks.tests.tpcds.{SingleTPCDSTest, TPCDSTest}
-import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, PageRank, ParquetConversion, ParquetGraphLoadTest, ReadOnly, SVDPlusPlus}
+import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, NaivePageRank, PageRank, ParquetConversion, ParquetGraphLoadTest, ReadOnly, SVDPlusPlus}
 import org.apache.spark.sql.SparkSession
 
 object SQLTestFactory {
@@ -35,7 +35,11 @@ object SQLTestFactory {
     } else if (options.isTestReadOnly) {
       new ReadOnly(options, spark)
     } else if (options.isTestPageRank) {
-      new PageRank(options, spark)
+      if (options.getNaiveImplementation) {
+        new NaivePageRank(options, spark)
+      } else {
+        new PageRank(options, spark)
+      }
     } else if (options.isTestConnectedComponents) {
       new ConnectedComponents(options, spark)
     } else if (options.isParquetConversion) {
