@@ -25,8 +25,12 @@ class SVDPlusPlus(val options: ParseOptions, spark:SparkSession) extends SQLTest
     val (graph, _) = org.apache.spark.graphx.lib.SVDPlusPlus.run(edges, conf)
     graph.cache()
 
-    val err = graph.vertices.map { case (vid, vd) => if (vid % 2 == 1) vd._4 else 0.0 }.reduce(_ + _) / graph.numEdges
-    step("[SVD++]Calculate Error")
+    val v = graph.vertices.map { case (vid, vd) => if (vid % 2 == 1) vd._4 else 0.0 }
+    step("[SVD++]Calculate Error - Map")
+
+    val err = v.reduce(_ + _) / graph.numEdges
+
+    step("[SVD++]Calculate Error - Reduce")
 
     log(s"Error: ${err}")
 
