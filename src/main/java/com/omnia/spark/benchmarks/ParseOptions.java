@@ -229,7 +229,7 @@ public class ParseOptions {
         // check valid test names
         if (!isTestEquiJoin() && !isTestQuery() && !isTestTPCDS() &&
                 !isTestReadOnly() && !isTestPageRank() && !isTestConnectedComponents() &&
-                !isParquetConversion() && !isParquetGraphLoadTest()) {
+                !isParquetConversion() && !isParquetGraphLoadTest() && !isSVDPlusPlus()) {
             errorAbort("ERROR: illegal test name : " + this.test);
         }
         /* some sanity checks */
@@ -268,6 +268,10 @@ public class ParseOptions {
 
     public boolean isParquetGraphLoadTest() {
         return this.test.compareToIgnoreCase("parquetGraphLoadTest") == 0;
+    }
+
+    public boolean isSVDPlusPlus() {
+        return this.test.compareToIgnoreCase("svdPlusPlus") == 0 || this.test.compareToIgnoreCase("svdpp") == 0;
     }
 
     public String[] getInputFiles(){
