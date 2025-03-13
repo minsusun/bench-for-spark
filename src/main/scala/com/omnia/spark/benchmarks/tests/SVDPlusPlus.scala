@@ -18,12 +18,14 @@ class SVDPlusPlus(val options: ParseOptions, spark:SparkSession) extends SQLTest
     })
     step("[SVD++]Build Edge RDD")
 
-    // TODO: extract configuration to parse options
-    val conf = new org.apache.spark.graphx.lib.SVDPlusPlus.Conf(10, 5, 0.0, 5.0, 0.007, 0.007, 0.005, 0.015)
-    step("[SVD++]Make Configuration")
+    val conf = options.getSVDPlusPlusConf
+    step("[SVD++]Get Configuration")
 
     val (graph, _) = org.apache.spark.graphx.lib.SVDPlusPlus.run(edges, conf)
+    step("[SVD++]Execution")
+
     graph.cache()
+    step("[SVD++]Result Graph Cache")
 
     val v = graph.vertices.map { case (vid, vd) => if (vid % 2 == 1) vd._4 else 0.0 }
     step("[SVD++]Calculate Error - Map")

@@ -22,10 +22,9 @@
 package com.omnia.spark.benchmarks;
 
 import org.apache.commons.cli.*;
+import org.apache.spark.graphx.lib.SVDPlusPlus;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ParseOptions {
     private Options options;
@@ -47,6 +46,7 @@ public class ParseOptions {
     private boolean auxGraphLoader = false;
     private boolean countGraph = false;
     private boolean naiveImplementation = false;
+    private SVDPlusPlus.Conf svdppConf = new SVDPlusPlus.Conf(10, 5, 0.0, 5.0, 0.007, 0.007, 0.005, 0.015);
 
     public ParseOptions(){
 
@@ -79,6 +79,7 @@ public class ParseOptions {
         options.addOption("aux", "auxGraphLoader", false, "whether to use auxiliary graph loader");
         options.addOption("count", "", false, "whether to count the vertices and edges of the graph");
         options.addOption("naive", "", false, "use naive implementation if available");
+        options.addOption("sc", "SVDPPConf", true, "configurations to be used in SVD++");
 
         // set defaults
         this.test = "readOnly";
@@ -109,6 +110,12 @@ public class ParseOptions {
         System.err.println(str);
         System.err.println("**************************************");
         System.exit(-1);
+    }
+
+    private void warningKeepGo(String str) {
+        System.err.println("************ WARNING *****************");
+        System.err.println(str);
+        System.err.println("**************************************");
     }
 
     public void parse(String[] args) {
@@ -222,6 +229,23 @@ public class ParseOptions {
             }
             if (cmd.hasOption("naive")) {
                 this.naiveImplementation = true;
+            }
+            if (cmd.hasOption("sc")) {
+                String[] arr = Arrays.stream(cmd.getOptionValue("sc").trim().split(","))
+                        .map(String::trim).toArray(String[]::new);
+                try {
+                    int rank = Integer.parseInt(arr[0]);
+                    int maxIterations = Integer.parseInt(arr[1]);
+                    double minVal = Double.parseDouble(arr[2]);
+                    double maxVal = Double.parseDouble(arr[3]);
+                    double gamma1 = Double.parseDouble(arr[4]);
+                    double gamma2 = Double.parseDouble(arr[5]);
+                    double gamma6 = Double.parseDouble(arr[6]);
+                    double gamma7 = Double.parseDouble(arr[7]);
+                    svdppConf = new SVDPlusPlus.Conf(rank, maxIterations, minVal, maxVal, gamma1, gamma2, gamma6, gamma7);
+                } catch (Exception e) {
+                    warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + Helpers.SVDPlusPlusConfToString(svdppConf));
+                }
             }
 
         } catch (ParseException e) {
@@ -344,5 +368,9 @@ public class ParseOptions {
 
     public boolean getNaiveImplementation() {
         return this.naiveImplementation;
+    }
+
+    public SVDPlusPlus.Conf getSVDPlusPlusConf() {
+        return this.svdppConf;
     }
 }
