@@ -79,7 +79,7 @@ public class ParseOptions {
         options.addOption("aux", "auxGraphLoader", false, "whether to use auxiliary graph loader");
         options.addOption("count", "", false, "whether to count the vertices and edges of the graph");
         options.addOption("naive", "", false, "use naive implementation if available");
-        options.addOption("sc", "SVDPPConf", true, "configurations to be used in SVD++");
+        options.addOption("sc", "SVDPPConf", true, "configurations to be used in SVD++(Rank: Int, MaxIterations: Int, MinValue: Double, MaxValue: Double, Gamma1: Double, Gamma2: Double, Gamma6: Double, Gamma7: Double)");
 
         // set defaults
         this.test = "readOnly";
@@ -234,6 +234,9 @@ public class ParseOptions {
                 String[] arr = Arrays.stream(cmd.getOptionValue("sc").trim().split(","))
                         .map(String::trim).toArray(String[]::new);
                 try {
+                    if (arr.length != 8) {
+                        throw new ParseException("Illegal number of parameters " + arr.length + ". It should be 8(Rank: Int, MaxIterations: Int, MinValue: Double, MaxValue: Double, Gamma1: Double, Gamma2: Double, Gamma6: Double, Gamma7: Double)");
+                    }
                     int rank = Integer.parseInt(arr[0]);
                     int maxIterations = Integer.parseInt(arr[1]);
                     double minVal = Double.parseDouble(arr[2]);
