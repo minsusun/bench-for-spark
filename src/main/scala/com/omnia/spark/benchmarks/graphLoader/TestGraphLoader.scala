@@ -37,27 +37,13 @@ class TestGraphLoader (val options: ParseOptions, spark: SparkSession) {
       loader.step("[ParquetGraphLoader]Reconstruct Graph From Existing RDDs")
 
       val _ = graph.cache()
-      loader.step("[ParquetGraphLoader]Graph Cache");
-
-      logString = loader.logToString
-
-      graph
-    } else if (loaderName.compareToIgnoreCase("parquet-rc") == 0) {
-      assert(filePath.endsWith(".parquet"), "😡 Given file is not parquet format")
-
-      val loader = new ParquetGraphLoaderRC()
-
-      val graph = loader.load(spark, filePath)
-      loader.step("[ParquetGraphLoaderRC]Reconstruct Graph From Existing RDDs")
-
-      val _ = graph.cache()
-      loader.step("[ParquetGraphLoaderRC]Graph Cache");
+      loader.step("[ParquetGraphLoader]Graph Cache")
 
       logString = loader.logToString
 
       graph
     } else {
-      throw new IllegalArgumentException(s"Wrong Graph Loader Name Given ${loaderName}")
+      throw new IllegalArgumentException("Wrong Graph Loader Name Given " + loaderName)
     }
   }
 }
