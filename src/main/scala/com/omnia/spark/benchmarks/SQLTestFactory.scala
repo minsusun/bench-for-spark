@@ -21,7 +21,7 @@
 package com.omnia.spark.benchmarks
 
 import com.omnia.spark.benchmarks.tests.tpcds.{SingleTPCDSTest, TPCDSTest}
-import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, NaivePageRank, PageRank, ParquetConversion, ParquetGraphLoadTest, ReadOnly, SVDPlusPlus}
+import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, LBFGS, NaivePageRank, PageRank, ParquetConversion, ParquetGraphLoadTest, ReadOnly, SVDPlusPlus}
 import org.apache.spark.sql.SparkSession
 
 object SQLTestFactory {
@@ -48,6 +48,8 @@ object SQLTestFactory {
       new ParquetGraphLoadTest(options, spark)
     } else if (options.isSVDPlusPlus) {
       new SVDPlusPlus(options, spark)
+    } else if (options.isLBFGS) {
+      new LBFGS(options, spark)
     } else {
       throw new Exception("Illegal test name ")
     }

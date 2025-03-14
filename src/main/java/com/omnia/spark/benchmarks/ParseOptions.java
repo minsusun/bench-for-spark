@@ -21,6 +21,7 @@
 
 package com.omnia.spark.benchmarks;
 
+import com.omnia.spark.benchmarks.tests.LBFGSConf;
 import org.apache.commons.cli.*;
 import org.apache.spark.graphx.lib.SVDPlusPlus;
 
@@ -47,6 +48,7 @@ public class ParseOptions {
     private boolean countGraph = false;
     private boolean naiveImplementation = false;
     private SVDPlusPlus.Conf svdppConf = new SVDPlusPlus.Conf(10, 5, 0.0, 5.0, 0.007, 0.007, 0.005, 0.015);
+    private LBFGSConf lbfgsConf = new LBFGSConf(0.6, 10, 1e-4, 20, 0.1, 11L);
 
     public ParseOptions(){
 
@@ -80,6 +82,7 @@ public class ParseOptions {
         options.addOption("count", "", false, "whether to count the vertices and edges of the graph");
         options.addOption("naive", "", false, "use naive implementation if available");
         options.addOption("svdppconf", "", true, "configurations to be used in SVD++(Rank: Int, MaxIterations: Int, MinValue: Double, MaxValue: Double, Gamma1: Double, Gamma2: Double, Gamma6: Double, Gamma7: Double)");
+        options.addOption("lbfgsconf", "", true, "configurations to be used in LBFGS(splitRatio: Double, numCorrections: Int, convergenceTol: Double, maxNumIterations: Int, regParam: Double, seed: Long)");
 
         // set defaults
         this.test = "readOnly";
@@ -250,6 +253,24 @@ public class ParseOptions {
                     warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + Helpers.SVDPlusPlusConfToString(svdppConf));
                 }
             }
+            if (cmd.hasOption("lbfgsconf")) {
+                String[] arr = Arrays.stream(cmd.getOptionValue("lbfgsconf").trim().split(","))
+                        .map(String::trim).toArray(String[]::new);
+                try {
+                    if (arr.length != 6) {
+                        throw new ParseException("Illegal number of parameters " + arr.length + ". It should be 8(splitRatio: Double, numCorrections: Int, convergenceTol: Double, maxNumIterations: Int, regParam: Double, seed: Long)");
+                    }
+                    double splitRatio = Double.parseDouble(arr[0]);
+                    int numCorrections = Integer.parseInt(arr[1]);
+                    double convergenceTol = Double.parseDouble(arr[2]);
+                    int maxNumIterations = Integer.parseInt(arr[3]);
+                    double regParam = Double.parseDouble(arr[4]);
+                    long seed = Long.parseLong(arr[5]);
+                    lbfgsConf = new LBFGSConf(splitRatio, numCorrections, convergenceTol, maxNumIterations, regParam, seed);
+                } catch (Exception e) {
+                    warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + Helpers.LBFGSConfToString(lbfgsConf));
+                }
+            }
 
         } catch (ParseException e) {
             errorAbort("Failed to parse command line properties" + e);
@@ -261,7 +282,8 @@ public class ParseOptions {
         // check valid test names
         if (!isTestEquiJoin() && !isTestQuery() && !isTestTPCDS() &&
                 !isTestReadOnly() && !isTestPageRank() && !isTestConnectedComponents() &&
-                !isParquetConversion() && !isParquetGraphLoadTest() && !isSVDPlusPlus()) {
+                !isParquetConversion() && !isParquetGraphLoadTest() && !isSVDPlusPlus() &&
+                !isLBFGS()) {
             errorAbort("ERROR: illegal test name : " + this.test);
         }
         /* some sanity checks */
@@ -304,6 +326,10 @@ public class ParseOptions {
 
     public boolean isSVDPlusPlus() {
         return this.test.compareToIgnoreCase("svdPlusPlus") == 0 || this.test.compareToIgnoreCase("svdpp") == 0;
+    }
+
+    public boolean isLBFGS() {
+        return this.test.compareToIgnoreCase("LBFGS") == 0;
     }
 
     public String[] getInputFiles(){
@@ -375,5 +401,9 @@ public class ParseOptions {
 
     public SVDPlusPlus.Conf getSVDPlusPlusConf() {
         return this.svdppConf;
+    }
+
+    public LBFGSConf getLBFGSConf() {
+        return this.lbfgsConf;
     }
 }
