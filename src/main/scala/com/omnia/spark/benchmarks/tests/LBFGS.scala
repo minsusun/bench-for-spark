@@ -14,12 +14,13 @@ class LBFGSConf(
   val convergenceTol: Double,
   val maxNumIterations: Int,
   val regParam: Double,
-  val seed: Long) {
+  val seed: Long
+) {
   assert(0 < splitRatio && splitRatio <= 1)
   assert(maxNumIterations > 0)
 }
 
-class LBFGS(val options: ParseOptions, spark: SparkSession) extends SQLTest(spark) with LogTrait{
+class LBFGS(val options: ParseOptions, spark: SparkSession) extends SQLTest(spark) with LogTrait {
 
   override def execute(): String = {
     val conf = options.getLBFGSConf
@@ -68,13 +69,13 @@ class LBFGS(val options: ParseOptions, spark: SparkSession) extends SQLTest(spar
     step("[LBFGS]Metrics")
 
     log("Loss of each step in training")
-    loss.zipWithIndex.foreach{ case(l, i) => log(s"step $i: $l")}
+    loss.zipWithIndex.foreach { case (l, i) => log(s"step $i: $l") }
     log(s"Area Under ROC = $auROC")
     s""
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String
-        = s"L-BFGS(Limited-memory Broyden-Fletcher-Goldfarb-Shanno Algorithm) on ${options.getInputFiles()(0)}"
+  override def plainExplain(): String =
+    s"L-BFGS(Limited-memory Broyden-Fletcher-Goldfarb-Shanno Algorithm) on ${options.getInputFiles()(0)}"
 }

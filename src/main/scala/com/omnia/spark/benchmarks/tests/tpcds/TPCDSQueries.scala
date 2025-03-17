@@ -21,9 +21,7 @@
 
 package com.omnia.spark.benchmarks.tests.tpcds
 
-/**
-  * Created by atr on 04.09.17.
-  */
+/** Created by atr on 04.09.17. */
 // bash script for this file. Run this in :
 //spark-sql-perf/src/main/resources/tpcds_2_4
 
@@ -51,7 +49,7 @@ package com.omnia.spark.benchmarks.tests.tpcds
 object TPCDSQueries {
   val query = scala.collection.mutable.Map[String, String]()
   query += ("q10.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "  cd_gender, cd_marital_status, cd_education_status, count(*) cnt1," +
@@ -100,7 +98,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q11.sql" ->
-    (""+
+    ("" +
       "" +
       " with year_total as (" +
       " select c_customer_id customer_id" +
@@ -175,7 +173,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q12.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id," +
       "  i_item_desc, i_category, i_class, i_current_price," +
@@ -198,7 +196,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q13.sql" ->
-    (""+
+    ("" +
       "" +
       " select avg(ss_quantity)" +
       "       ,avg(ss_ext_sales_price)" +
@@ -251,7 +249,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q14a.sql" ->
-    (""+
+    ("" +
       "" +
       "with cross_items as" +
       " (select i_item_sk ss_item_sk" +
@@ -334,7 +332,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q14b.sql" ->
-    (""+
+    ("" +
       "" +
       " with  cross_items as" +
       " (select i_item_sk ss_item_sk" +
@@ -402,7 +400,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q15.sql" ->
-    (""+
+    ("" +
       "" +
       " select ca_zip, sum(cs_sales_price)" +
       " from catalog_sales, customer, customer_address, date_dim" +
@@ -420,7 +418,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q16.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "   count(distinct cs_order_number) as `order count`," +
@@ -447,7 +445,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q17.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id" +
       "       ,i_item_desc" +
@@ -483,7 +481,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q18.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id," +
       "        ca_country," +
@@ -515,7 +513,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q19.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_brand_id brand_id, i_brand brand, i_manufact_id, i_manufact," +
       " 	sum(ss_ext_sales_price) ext_price" +
@@ -535,7 +533,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q1.sql" ->
-    (""+
+    ("" +
       "" +
       " WITH customer_total_return AS" +
       "   (SELECT sr_customer_sk AS ctr_customer_sk, sr_store_sk AS ctr_store_sk," +
@@ -556,7 +554,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q20.sql" ->
-    (""+
+    ("" +
       "" +
       "select i_item_id, i_item_desc" +
       "       ,i_category" +
@@ -577,7 +575,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q21.sql" ->
-    (""+
+    ("" +
       "" +
       " select * from(" +
       "   select w_warehouse_name, i_item_id," +
@@ -604,7 +602,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q22.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_product_name, i_brand, i_class, i_category, avg(inv_quantity_on_hand) qoh" +
       "       from inventory, date_dim, item, warehouse" +
@@ -618,7 +616,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q23a.sql" ->
-    (""+
+    ("" +
       "" +
       " with frequent_ss_items as" +
       " (select substr(i_item_desc,1,30) itemdesc,i_item_sk item_sk,d_date solddate,count(*) cnt" +
@@ -662,7 +660,7 @@ object TPCDSQueries {
       " limit 100" +
       ""))
   query += ("q23b.sql" ->
-    (""+
+    ("" +
       "" +
       "" +
       " with frequent_ss_items as" +
@@ -714,7 +712,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q24a.sql" ->
-    (""+
+    ("" +
       "" +
       " with ssales as" +
       " (select c_last_name, c_first_name, s_store_name, ca_state, s_state, i_color," +
@@ -738,7 +736,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q24b.sql" ->
-    (""+
+    ("" +
       "" +
       " with ssales as" +
       " (select c_last_name, c_first_name, s_store_name, ca_state, s_state, i_color," +
@@ -762,7 +760,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q25.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id, i_item_desc, s_store_id, s_store_name," +
       "    sum(ss_net_profit) as store_sales_profit," +
@@ -796,7 +794,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q26.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id," +
       "        avg(cs_quantity) agg1," +
@@ -819,7 +817,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q27.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id," +
       "        s_state, grouping(s_state) g_state," +
@@ -843,7 +841,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q28.sql" ->
-    (""+
+    ("" +
       "" +
       " select *" +
       " from (select avg(ss_list_price) B1_LP" +
@@ -898,7 +896,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q29.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "     i_item_id" +
@@ -935,7 +933,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q2.sql" ->
-    (""+
+    ("" +
       "" +
       " WITH wscs as" +
       " (SELECT sold_date_sk, sales_price" +
@@ -990,7 +988,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q30.sql" ->
-    (""+
+    ("" +
       "" +
       " with customer_total_return as" +
       " (select wr_returning_customer_sk as ctr_customer_sk" +
@@ -1018,7 +1016,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q31.sql" ->
-    (""+
+    ("" +
       "" +
       " with ss as" +
       " (select ca_county,d_qoy, d_year,sum(ss_ext_sales_price) as store_sales" +
@@ -1067,7 +1065,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q32.sql" ->
-    (""+
+    ("" +
       "" +
       " select sum(cs_ext_discount_amt) as `excess discount amount`" +
       " from" +
@@ -1087,7 +1085,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q33.sql" ->
-    (""+
+    ("" +
       "" +
       " with ss as (" +
       "    select" +
@@ -1145,7 +1143,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q34.sql" ->
-    (""+
+    ("" +
       "" +
       " select c_last_name, c_first_name, c_salutation, c_preferred_cust_flag, ss_ticket_number," +
       "        cnt" +
@@ -1173,7 +1171,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q35.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "  ca_state," +
@@ -1222,7 +1220,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q36.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    sum(ss_net_profit)/sum(ss_ext_sales_price) as gross_margin" +
@@ -1250,7 +1248,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q37.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id, i_item_desc, i_current_price" +
       " from item, inventory, date_dim, catalog_sales" +
@@ -1267,7 +1265,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q38.sql" ->
-    (""+
+    ("" +
       "" +
       " select count(*) from (" +
       "    select distinct c_last_name, c_first_name, d_date" +
@@ -1292,7 +1290,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q39a.sql" ->
-    (""+
+    ("" +
       "" +
       " with inv as" +
       " (select w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy" +
@@ -1318,7 +1316,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q39b.sql" ->
-    (""+
+    ("" +
       "" +
       " with inv as" +
       " (select w_warehouse_name,w_warehouse_sk,i_item_sk,d_moy" +
@@ -1345,7 +1343,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q3.sql" ->
-    (""+
+    ("" +
       "" +
       " SELECT dt.d_year, item.i_brand_id brand_id, item.i_brand brand,SUM(ss_ext_sales_price) sum_agg" +
       " FROM  date_dim dt, store_sales, item" +
@@ -1359,7 +1357,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q40.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "   w_state" +
@@ -1386,7 +1384,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q41.sql" ->
-    (""+
+    ("" +
       "" +
       " select distinct(i_product_name)" +
       " from item i1" +
@@ -1440,7 +1438,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q42.sql" ->
-    (""+
+    ("" +
       "" +
       " select dt.d_year, item.i_category_id, item.i_category, sum(ss_ext_sales_price)" +
       " from 	date_dim dt, store_sales, item" +
@@ -1459,7 +1457,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q43.sql" ->
-    (""+
+    ("" +
       "" +
       " select s_store_name, s_store_id," +
       "        sum(case when (d_day_name='Sunday') then ss_sales_price else null end) sun_sales," +
@@ -1481,7 +1479,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q44.sql" ->
-    (""+
+    ("" +
       "" +
       " select asceding.rnk, i1.i_product_name best_performing, i2.i_product_name worst_performing" +
       " from(select *" +
@@ -1517,7 +1515,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q45.sql" ->
-    (""+
+    ("" +
       "" +
       " select ca_zip, ca_city, sum(ws_sales_price)" +
       " from web_sales, customer, customer_address, date_dim, item" +
@@ -1539,7 +1537,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q46.sql" ->
-    (""+
+    ("" +
       "" +
       " select c_last_name, c_first_name, ca_city, bought_city, ss_ticket_number, amt,profit" +
       " from" +
@@ -1567,7 +1565,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q47.sql" ->
-    (""+
+    ("" +
       "" +
       " with v1 as(" +
       " select i_category, i_brand," +
@@ -1618,7 +1616,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q48.sql" ->
-    (""+
+    ("" +
       "" +
       " select sum (ss_quantity)" +
       " from store_sales, store, customer_demographics, customer_address, date_dim" +
@@ -1686,7 +1684,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q49.sql" ->
-    (""+
+    ("" +
       "" +
       " select 'web' as channel, web.item, web.return_ratio, web.return_rank, web.currency_rank" +
       " from (" +
@@ -1786,7 +1784,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q4.sql" ->
-    (""+
+    ("" +
       "" +
       "WITH year_total AS (" +
       " SELECT c_customer_id customer_id," +
@@ -1891,7 +1889,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q50.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    s_store_name, s_company_id, s_street_number, s_street_name, s_street_type," +
@@ -1925,7 +1923,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q51.sql" ->
-    (""+
+    ("" +
       "" +
       " WITH web_v1 as (" +
       " select" +
@@ -1966,7 +1964,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q52.sql" ->
-    (""+
+    ("" +
       "" +
       " select dt.d_year" +
       " 	,item.i_brand_id brand_id" +
@@ -1984,7 +1982,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q53.sql" ->
-    (""+
+    ("" +
       "" +
       " select * from" +
       "   (select i_manufact_id," +
@@ -2016,7 +2014,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q54.sql" ->
-    (""+
+    ("" +
       "" +
       " with my_customers as (" +
       " select distinct c_customer_sk" +
@@ -2072,7 +2070,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q55.sql" ->
-    (""+
+    ("" +
       "" +
       "select i_brand_id brand_id, i_brand brand," +
       " 	sum(ss_ext_sales_price) ext_price" +
@@ -2088,7 +2086,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q56.sql" ->
-    (""+
+    ("" +
       "" +
       " with ss as (" +
       " select i_item_id,sum(ss_ext_sales_price) total_sales" +
@@ -2141,7 +2139,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q57.sql" ->
-    (""+
+    ("" +
       "" +
       " with v1 as(" +
       " select i_category, i_brand," +
@@ -2187,7 +2185,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q58.sql" ->
-    (""+
+    ("" +
       "" +
       " with ss_items as" +
       " (select i_item_id item_id, sum(ss_ext_sales_price) ss_item_rev" +
@@ -2245,7 +2243,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q59.sql" ->
-    (""+
+    ("" +
       "" +
       " with wss as" +
       " (select d_week_seq," +
@@ -2291,7 +2289,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q5.sql" ->
-    (""+
+    ("" +
       "" +
       " WITH ssr AS" +
       "  (SELECT s_store_id," +
@@ -2413,7 +2411,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q60.sql" ->
-    (""+
+    ("" +
       "" +
       " with ss as (" +
       "    select i_item_id,sum(ss_ext_sales_price) total_sales" +
@@ -2463,7 +2461,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q61.sql" ->
-    (""+
+    ("" +
       "" +
       " select promotions,total,cast(promotions as decimal(15,4))/cast(total as decimal(15,4))*100" +
       " from" +
@@ -2498,7 +2496,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q62.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "   substr(w_warehouse_name,1,20)" +
@@ -2528,7 +2526,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q63.sql" ->
-    (""+
+    ("" +
       "" +
       " select *" +
       " from (select i_manager_id" +
@@ -2560,7 +2558,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q64.sql" ->
-    (""+
+    ("" +
       "" +
       " with cs_ui as" +
       "  (select cs_item_sk" +
@@ -2622,7 +2620,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q65.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "	  s_store_name, i_item_desc, sc.revenue, i_current_price, i_wholesale_cost, i_brand" +
@@ -2648,7 +2646,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q66.sql" ->
-    (""+
+    ("" +
       "" +
       " select w_warehouse_name, w_warehouse_sq_ft, w_city, w_county, w_state, w_country," +
       "    ship_carriers, year" +
@@ -2779,7 +2777,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q67.sql" ->
-    (""+
+    ("" +
       "" +
       " select * from" +
       "     (select i_category, i_class, i_brand, i_product_name, d_year, d_qoy, d_moy, s_store_id," +
@@ -2802,7 +2800,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q68.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    c_last_name, c_first_name, ca_city, bought_city, ss_ticket_number, extended_price," +
@@ -2833,7 +2831,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q69.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    cd_gender, cd_marital_status, cd_education_status, count(*) cnt1," +
@@ -2867,7 +2865,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q6.sql" ->
-    (""+
+    ("" +
       "" +
       "SELECT state, cnt FROM (" +
       " SELECT a.ca_state state, count(*) cnt" +
@@ -2890,7 +2888,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q70.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    sum(ss_net_profit) as total_sum, s_state, s_county" +
@@ -2924,7 +2922,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q71.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_brand_id brand_id, i_brand brand,t_hour,t_minute," +
       " 	  sum(ext_price) ext_price" +
@@ -2969,7 +2967,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q72.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_desc" +
       "       ,w_warehouse_name" +
@@ -3000,7 +2998,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q73.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    c_last_name, c_first_name, c_salutation, c_preferred_cust_flag," +
@@ -3025,7 +3023,7 @@ object TPCDSQueries {
       "" +
       ""))
   query += ("q74.sql" ->
-    (""+
+    ("" +
       "" +
       " with year_total as (" +
       " select" +
@@ -3076,7 +3074,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q75.sql" ->
-    (""+
+    ("" +
       "" +
       " WITH all_sales AS (" +
       "    SELECT" +
@@ -3135,7 +3133,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q76.sql" ->
-    (""+
+    ("" +
       "" +
       " SELECT" +
       "    channel, col_name, d_year, d_qoy, i_category, COUNT(*) sales_cnt," +
@@ -3170,7 +3168,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q77.sql" ->
-    (""+
+    ("" +
       "" +
       " with ss as" +
       " (select s_store_sk, sum(ss_ext_sales_price) as sales, sum(ss_net_profit) as profit" +
@@ -3243,7 +3241,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q78.sql" ->
-    (""+
+    ("" +
       "" +
       " with ws as" +
       "   (select d_year AS ws_sold_year, ws_item_sk," +
@@ -3303,7 +3301,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q79.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "  c_last_name,c_first_name,substr(s_city,1,30),ss_ticket_number,amt,profit" +
@@ -3329,7 +3327,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q7.sql" ->
-    (""+
+    ("" +
       "" +
       " SELECT i_item_id," +
       "        avg(ss_quantity) agg1," +
@@ -3351,7 +3349,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q80.sql" ->
-    (""+
+    ("" +
       "" +
       " with ssr as" +
       " (select  s_store_id as store_id," +
@@ -3423,7 +3421,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q81.sql" ->
-    (""+
+    ("" +
       "" +
       " with customer_total_return as" +
       " (select" +
@@ -3452,7 +3450,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q82.sql" ->
-    (""+
+    ("" +
       "" +
       " select i_item_id, i_item_desc, i_current_price" +
       " from item, inventory, date_dim, store_sales" +
@@ -3469,7 +3467,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q83.sql" ->
-    (""+
+    ("" +
       "" +
       " with sr_items as" +
       "  (select i_item_id item_id, sum(sr_return_quantity) sr_item_qty" +
@@ -3511,7 +3509,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q84.sql" ->
-    (""+
+    ("" +
       "" +
       " select c_customer_id as customer_id" +
       "       ,coalesce(c_last_name,'') + ', ' + coalesce(c_first_name,'') as customername" +
@@ -3534,7 +3532,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q85.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    substr(r_reason_desc,1,20), avg(ws_quantity), avg(wr_refunded_cash), avg(wr_fee)" +
@@ -3618,7 +3616,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q86.sql" ->
-    (""+
+    ("" +
       "" +
       " select sum(ws_net_paid) as total_sum, i_category, i_class," +
       "  grouping(i_category)+grouping(i_class) as lochierarchy," +
@@ -3641,7 +3639,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q87.sql" ->
-    (""+
+    ("" +
       "" +
       " select count(*)" +
       " from ((select distinct c_last_name, c_first_name, d_date" +
@@ -3665,7 +3663,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q88.sql" ->
-    (""+
+    ("" +
       "" +
       " select  *" +
       " from" +
@@ -3760,7 +3758,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q89.sql" ->
-    (""+
+    ("" +
       "" +
       " select *" +
       " from(" +
@@ -3788,7 +3786,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q8.sql" ->
-    (""+
+    ("" +
       "" +
       " select s_store_name, sum(ss_net_profit)" +
       " from store_sales, date_dim, store," +
@@ -3874,7 +3872,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q90.sql" ->
-    (""+
+    ("" +
       "" +
       " select cast(amc as decimal(15,4))/cast(pmc as decimal(15,4)) am_pm_ratio" +
       " from ( select count(*) amc" +
@@ -3898,7 +3896,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q91.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "        cc_call_center_id Call_Center, cc_name Call_Center_Name, cc_manager Manager," +
@@ -3924,7 +3922,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q92.sql" ->
-    (""+
+    ("" +
       "" +
       " select sum(ws_ext_discount_amt) as `Excess Discount Amount`" +
       " from web_sales, item, date_dim" +
@@ -3945,7 +3943,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q93.sql" ->
-    (""+
+    ("" +
       "" +
       " select ss_customer_sk, sum(act_sales) sumsales" +
       " from (select" +
@@ -3963,7 +3961,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q94.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    count(distinct ws_order_number) as `order count`" +
@@ -3991,7 +3989,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q95.sql" ->
-    (""+
+    ("" +
       "" +
       " with ws_wh as" +
       " (select ws1.ws_order_number,ws1.ws_warehouse_sk wh1,ws2.ws_warehouse_sk wh2" +
@@ -4022,7 +4020,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q96.sql" ->
-    (""+
+    ("" +
       "" +
       " select count(*)" +
       " from store_sales, household_demographics, time_dim, store" +
@@ -4038,7 +4036,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q97.sql" ->
-    (""+
+    ("" +
       "" +
       " with ssci as (" +
       " select ss_customer_sk customer_sk, ss_item_sk item_sk" +
@@ -4061,7 +4059,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q98.sql" ->
-    (""+
+    ("" +
       "" +
       "select i_item_desc, i_category, i_class, i_current_price" +
       "      ,sum(ss_ext_sales_price) as itemrevenue" +
@@ -4082,7 +4080,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q99.sql" ->
-    (""+
+    ("" +
       "" +
       " select" +
       "    substr(w_warehouse_name,1,20), sm_type, cc_name" +
@@ -4109,7 +4107,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("q9.sql" ->
-    (""+
+    ("" +
       "" +
       "select case when (select count(*) from store_sales" +
       "                  where ss_quantity between 1 and 20) > 74129" +
@@ -4146,7 +4144,7 @@ object TPCDSQueries {
       "            " +
       ""))
   query += ("ss_max.sql" ->
-    (""+
+    ("" +
       "select" +
       "  count(*) as total," +
       "  count(ss_sold_date_sk) as not_null_total," +

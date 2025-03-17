@@ -4,7 +4,9 @@ import com.omnia.spark.benchmarks.graphLoader.TestGraphLoader
 import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
-class ParquetGraphLoadTest(val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) with LogTrait{
+class ParquetGraphLoadTest(val options: ParseOptions, spark: SparkSession)
+    extends SQLTest(spark)
+    with LogTrait {
 
   override def execute(): String = {
     val loader = new TestGraphLoader(options, spark)

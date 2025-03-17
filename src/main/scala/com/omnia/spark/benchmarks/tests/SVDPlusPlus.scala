@@ -4,7 +4,9 @@ import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.graphx.Edge
 import org.apache.spark.sql.SparkSession
 
-class SVDPlusPlus(val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) with LogTrait{
+class SVDPlusPlus(val options: ParseOptions, spark: SparkSession)
+    extends SQLTest(spark)
+    with LogTrait {
 
   override def execute(): String = {
     val sc = spark.sparkContext
@@ -12,10 +14,10 @@ class SVDPlusPlus(val options: ParseOptions, spark:SparkSession) extends SQLTest
     val textFile = sc.textFile(options.getInputFiles()(0))
     step("[SVD++]Text File Read")
 
-    val edges = textFile.map( line => {
-        val lineArray = line.split("\\s+")
-        Edge[Double](lineArray(0).toLong * 2, lineArray(1).toLong * 2 + 1, lineArray(2).toDouble)
-    })
+    val edges = textFile.map { line =>
+      val lineArray = line.split("\\s+")
+      Edge[Double](lineArray(0).toLong * 2, lineArray(1).toLong * 2 + 1, lineArray(2).toDouble)
+    }
     step("[SVD++]Build Edge RDD")
 
     val conf = options.getSVDPlusPlusConf

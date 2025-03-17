@@ -21,12 +21,26 @@
 package com.omnia.spark.benchmarks
 
 import com.omnia.spark.benchmarks.tests.tpcds.{SingleTPCDSTest, TPCDSTest}
-import com.omnia.spark.benchmarks.tests.{ConnectedComponents, EquiJoin, LBFGS, NaivePageRank, PageRank, ParquetConversion, ParquetGraphLoadTest, ReadOnly, SVDPlusPlus}
+import com.omnia.spark.benchmarks.tests.{
+  ConnectedComponents,
+  EquiJoin,
+  LBFGS,
+  NaivePageRank,
+  PageRank,
+  ParquetConversion,
+  ParquetGraphLoadTest,
+  ReadOnly,
+  SVDPlusPlus
+}
 import org.apache.spark.sql.SparkSession
 
 object SQLTestFactory {
-  def newTestInstance(options: ParseOptions, spark:SparkSession, warnings:StringBuilder) : SQLTest = {
-    if(options.isTestEquiJoin) {
+  def newTestInstance(
+    options: ParseOptions,
+    spark: SparkSession,
+    warnings: StringBuilder
+  ): SQLTest = {
+    if (options.isTestEquiJoin) {
       new EquiJoin(options, spark)
     } else if (options.isTestQuery) {
       new SingleTPCDSTest(options, spark)

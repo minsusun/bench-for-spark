@@ -4,7 +4,9 @@ import com.omnia.spark.benchmarks.graphLoader.TestGraphLoader
 import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
-class PageRank (val options: ParseOptions, spark: SparkSession) extends SQLTest(spark) with LogTrait {
+class PageRank(val options: ParseOptions, spark: SparkSession)
+    extends SQLTest(spark)
+    with LogTrait {
 
   override def execute(): String = {
     val loader = new TestGraphLoader(options, spark);
@@ -16,10 +18,13 @@ class PageRank (val options: ParseOptions, spark: SparkSession) extends SQLTest(
     org.apache.spark.graphx.lib.PageRank.run(graph, options.getIterations)
     step("[PageRank]Execution")
 
-    "Ran PageRank " + options.getIterations + " iterations on " + options.getInputFiles()(0) + logToString
+    "Ran PageRank " + options.getIterations + " iterations on " + options.getInputFiles()(
+      0
+    ) + logToString
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = s"Page Rank ${options.getIterations} iterations on ${options.getInputFiles()(0)}"
+  override def plainExplain(): String =
+    s"Page Rank ${options.getIterations} iterations on ${options.getInputFiles()(0)}"
 }

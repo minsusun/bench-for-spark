@@ -23,11 +23,13 @@ package com.omnia.spark.benchmarks.tests
 import com.omnia.spark.benchmarks.{ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
-class EquiJoin(val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) {
+class EquiJoin(val options: ParseOptions, spark: SparkSession) extends SQLTest(spark) {
   private val file1 = options.getInputFiles()(0)
   private val file2 = options.getInputFiles()(1)
-  private val f1 = spark.read.format(options.getInputFormat).options(options.getInputFormatOptions).load(file1)
-  private val f2 = spark.read.format(options.getInputFormat).options(options.getInputFormatOptions).load(file2)
+  private val f1 =
+    spark.read.format(options.getInputFormat).options(options.getInputFormatOptions).load(file1)
+  private val f2 =
+    spark.read.format(options.getInputFormat).options(options.getInputFormatOptions).load(file2)
   private val key = options.getJoinKey
   private val result = f1.joinWith(f2, f1(key) === f2(key))
 
@@ -35,5 +37,6 @@ class EquiJoin(val options: ParseOptions, spark:SparkSession) extends SQLTest(sp
 
   override def explain(): Unit = result.explain(true)
 
-  override def plainExplain(): String = "EquiJoin (joinWith) on " + file1 + " and " + file2 + " with key " + key
+  override def plainExplain(): String =
+    "EquiJoin (joinWith) on " + file1 + " and " + file2 + " with key " + key
 }

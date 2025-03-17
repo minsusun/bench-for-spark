@@ -24,19 +24,19 @@ package com.omnia.spark.benchmarks
 import org.apache.spark.sql.SparkSession
 
 object Main {
-  
-  def foo(x : Array[String]) = x.foldLeft("")((a,b) => a + b)
-  
-  def main(args : Array[String]) {
-    println( "Hello World!" )
+
+  def foo(x: Array[String]) = x.foldLeft("")((a, b) => a + b)
+
+  def main(args: Array[String]) {
+    println("Hello World!")
     println("concat arguments = " + foo(args))
-    val sb:StringBuilder = new StringBuilder
+    val sb: StringBuilder = new StringBuilder
     val options = new ParseOptions()
     options.parse(args)
 
     val spark = SparkSession.builder.appName("Spark benchmarks 🙈").getOrCreate
 
-    if(options.getDoWarmup) {
+    if (options.getDoWarmup) {
       /* here we do the trick that we execute the whole test before */
       val warmupOptions = options
       val saveOriginalInputFIle = options.getInputFiles
@@ -45,8 +45,8 @@ object Main {
       files set to the warm up files.
       We can use the output file
        */
-      val warningsWarmUp:StringBuilder = new StringBuilder
-      val warmUpTest:SQLTest = SQLTestFactory.newTestInstance(warmupOptions, spark, warningsWarmUp)
+      val warningsWarmUp: StringBuilder = new StringBuilder
+      val warmUpTest: SQLTest = SQLTestFactory.newTestInstance(warmupOptions, spark, warningsWarmUp)
       val s = System.nanoTime()
       val warmupResult = warmUpTest.execute()
       val e = System.nanoTime()
@@ -55,9 +55,9 @@ object Main {
       sb.append("        hence for sensible output use different files between -i & -w.\n")
       sb.append("WarmUp Test           : " + warmUpTest.plainExplain() + "\n")
       sb.append("WarmUp Action         : " + warmupOptions.getAction.toString + "\n")
-      sb.append("WarmUp Execution time : " + (e - s)/1000000 + " msec" + "\n")
-      sb.append("WarmUp Result         : " +  warmupResult + "\n")
-      if(options.getVerbose){
+      sb.append("WarmUp Execution time : " + (e - s) / 1000000 + " msec" + "\n")
+      sb.append("WarmUp Result         : " + warmupResult + "\n")
+      if (options.getVerbose) {
         sb.append("---------------- warmup explain ----------------------" + "\n")
         sb.append(warmUpTest.explain())
       }
@@ -66,17 +66,17 @@ object Main {
       options.setInputFiles(saveOriginalInputFIle)
     }
 
-    val warningsTest:StringBuilder = new StringBuilder
-    val test:SQLTest = SQLTestFactory.newTestInstance(options, spark, warningsTest)
+    val warningsTest: StringBuilder = new StringBuilder
+    val test: SQLTest = SQLTestFactory.newTestInstance(options, spark, warningsTest)
     val s = System.nanoTime()
     val result = test.execute()
     val e = System.nanoTime()
     sb.append("-------------------------------------------------" + "\n")
     sb.append("Test           : " + test.plainExplain() + "\n")
     sb.append("Action         : " + options.getAction.toString + "\n")
-    sb.append("Execution time : " + (e - s)/1000000 + " msec" + "\n")
-    sb.append("Result         : " +  result + "\n")
-    if(options.getVerbose){
+    sb.append("Execution time : " + (e - s) / 1000000 + " msec" + "\n")
+    sb.append("Result         : " + result + "\n")
+    if (options.getVerbose) {
       sb.append("---------------- explain ------------------------\n")
       sb.append(test.explain() + "\n")
     }

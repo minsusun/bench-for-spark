@@ -4,7 +4,7 @@ import com.omnia.spark.benchmarks.LogTrait
 import org.apache.spark.graphx.{Edge, Graph}
 import org.apache.spark.sql.SparkSession
 
-class ParquetGraphLoader extends LogTrait{
+class ParquetGraphLoader extends LogTrait {
   def load(spark: SparkSession, path: String): Graph[Int, Int] = {
     val p = spark.read.parquet(path)
     step("[ParquetGraphLoader]Load Parquet File")

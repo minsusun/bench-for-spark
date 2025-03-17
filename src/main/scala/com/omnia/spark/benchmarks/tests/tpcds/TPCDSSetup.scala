@@ -3,9 +3,7 @@ package com.omnia.spark.benchmarks.tests.tpcds
 import com.omnia.spark.benchmarks.ParseOptions
 import org.apache.spark.sql.SparkSession
 
-/**
-  * Created by atr on 04.09.17.
-  */
+/** Created by atr on 04.09.17. */
 object TPCDSSetup {
   private var items = Array(
     "call_center",
@@ -34,9 +32,13 @@ object TPCDSSetup {
     "web_site"
   )
 
-  def readAndRegisterTempTables(options:ParseOptions, spark:SparkSession):Unit = {
-    items.foreach( tab => {
-      spark.read.format(options.getInputFormat).options(options.getInputFormatOptions).load(options.getInputFiles()(0)+"/"+tab).createOrReplaceTempView(tab)
-    })
+  def readAndRegisterTempTables(options: ParseOptions, spark: SparkSession): Unit = {
+    items.foreach { tab =>
+      spark.read
+        .format(options.getInputFormat)
+        .options(options.getInputFormatOptions)
+        .load(options.getInputFiles()(0) + "/" + tab)
+        .createOrReplaceTempView(tab)
+    }
   }
 }

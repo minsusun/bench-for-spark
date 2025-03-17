@@ -5,7 +5,9 @@ import com.omnia.spark.benchmarks.helpers.HDFSHelper
 import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
-class ConnectedComponents (val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) with LogTrait{
+class ConnectedComponents(val options: ParseOptions, spark: SparkSession)
+    extends SQLTest(spark)
+    with LogTrait {
 
   override def execute(): String = {
     if (options.getSaveResult) {
@@ -32,10 +34,12 @@ class ConnectedComponents (val options: ParseOptions, spark:SparkSession) extend
       step("[ConnectedComponents]Save resultEG")
     }
 
-    "Ran ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0) + logToString
+    "Ran ConnectedComponents " + options.getIterations + " iterations on " + options
+      .getInputFiles()(0) + logToString
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = "ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0)
+  override def plainExplain(): String =
+    "ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0)
 }

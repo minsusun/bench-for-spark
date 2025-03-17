@@ -25,13 +25,12 @@ import com.omnia.spark.benchmarks.{Action, Noop, ParseOptions, SQLTest}
 import org.apache.spark.graphx.GraphLoader
 import org.apache.spark.sql.SparkSession
 
-/**
-  * Created by atr on 20.09.17.
-  */
-class PageRank (val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) {
+/** Created by atr on 20.09.17. */
+class PageRank(val options: ParseOptions, spark: SparkSession) extends SQLTest(spark) {
   /* we got the input file, we then load it */
   private val start = System.nanoTime()
-  private val graph = GraphLoader.edgeListFile(spark.sparkContext, options.getInputFiles()(0)).cache()
+  private val graph =
+    GraphLoader.edgeListFile(spark.sparkContext, options.getInputFiles()(0)).cache()
   private val end = System.nanoTime()
 
   override def execute(): String = {
@@ -42,14 +41,16 @@ class PageRank (val options: ParseOptions, spark:SparkSession) extends SQLTest(s
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = "PageRank " + options.getIterations + " iterations on " + options.getInputFiles()(0)
+  override def plainExplain(): String =
+    "PageRank " + options.getIterations + " iterations on " + options.getInputFiles()(0)
 
-  override def printAdditionalInformation():String = {
+  override def printAdditionalInformation(): String = {
     val sb = new StringBuilder()
-    sb.append("Graph load time: " + (end - start)/1000000 + " msec\n")
+    sb.append("Graph load time: " + (end - start) / 1000000 + " msec\n")
     val str = options.getAction match {
-      case noop:Noop => ""
-      case a:Action => "Warning: action " + a.toString + " was ignored. PageRank does not need any explicit action.\n"
+      case noop: Noop => ""
+      case a: Action =>
+        "Warning: action " + a.toString + " was ignored. PageRank does not need any explicit action.\n"
     }
     sb.append(str)
     sb.mkString

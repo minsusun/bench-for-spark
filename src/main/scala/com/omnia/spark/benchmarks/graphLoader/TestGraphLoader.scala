@@ -4,7 +4,7 @@ import com.omnia.spark.benchmarks.ParseOptions
 import org.apache.spark.graphx.{AuxGraphLoader, Graph}
 import org.apache.spark.sql.SparkSession
 
-class TestGraphLoader (val options: ParseOptions, spark: SparkSession) {
+class TestGraphLoader(val options: ParseOptions, spark: SparkSession) {
   val loaderName: String = options.getGraphLoader
   private var logString = ""
 
@@ -15,7 +15,9 @@ class TestGraphLoader (val options: ParseOptions, spark: SparkSession) {
     val filePath: String = options.getInputFiles()(0)
     if (loaderName.compareToIgnoreCase("graphX") == 0) {
       if (filePath.endsWith(".parquet")) {
-        throw new IllegalArgumentException("😡 Input file for GraphX(Aux) Graph Loader should not be in parquet format")
+        throw new IllegalArgumentException(
+          "😡 Input file for GraphX(Aux) Graph Loader should not be in parquet format"
+        )
       }
       val loader = new GraphXGraphLoader()
 
@@ -26,7 +28,9 @@ class TestGraphLoader (val options: ParseOptions, spark: SparkSession) {
       graph
     } else if (loaderName.compareToIgnoreCase("aux") == 0) {
       if (filePath.endsWith(".parquet")) {
-        throw new IllegalArgumentException("😡 Input file for GraphX(Aux) Graph Loader should not be in parquet format")
+        throw new IllegalArgumentException(
+          "😡 Input file for GraphX(Aux) Graph Loader should not be in parquet format"
+        )
       }
       val loader = new AuxGraphLoader()
 

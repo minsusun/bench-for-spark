@@ -23,33 +23,30 @@ package com.omnia.spark.benchmarks.tests
 import com.omnia.spark.benchmarks.{ParseOptions, SQLTest}
 import org.apache.spark.sql.{Dataset, SparkSession, _}
 
-/**
-  * Created by atr on 05.05.17.
-  */
-class ReadOnly(val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) {
+/** Created by atr on 05.05.17. */
+class ReadOnly(val options: ParseOptions, spark: SparkSession) extends SQLTest(spark) {
   private val fmt = options.getInputFormat
   private val inputfiles = options.getInputFiles()
-  //println("Number of input files are : " + inputfiles.length + " with format " + fmt)
+  // println("Number of input files are : " + inputfiles.length + " with format " + fmt)
 
-  private var readDataSetArr:Array[Dataset[Row]] = new Array[Dataset[Row]](inputfiles.length)
+  private var readDataSetArr: Array[Dataset[Row]] = new Array[Dataset[Row]](inputfiles.length)
   var i = 0
   // we first read all of them
-  inputfiles.foreach(in => {
+  inputfiles.foreach { in =>
     readDataSetArr(i) = spark.read.format(fmt).options(options.getInputFormatOptions).load(in)
-    i+=1
-  })
+    i += 1
+  }
 
   // we then make a union of them
-  var finalDataset:Dataset[Row] = readDataSetArr(0)
-  for(i <- 1 until readDataSetArr.length){
+  var finalDataset: Dataset[Row] = readDataSetArr(0)
+  for (i <- 1 until readDataSetArr.length) {
     finalDataset = readDataSetArr(i).union(finalDataset)
   }
 
   // we do cache here, because now any action will trigger the whole data set reading
   // even the count().
-  override def execute(): String = {
+  override def execute(): String =
     takeAction(options, finalDataset)
-  }
 
 // TODO: this needs to be investigated, the performance difference
 //  override def execute(): String = {
@@ -59,8 +56,8 @@ class ReadOnly(val options: ParseOptions, spark:SparkSession) extends SQLTest(sp
   override def explain(): Unit = readDataSetArr(0).explain(true)
 
   override def plainExplain(): String = {
-    var str:String = ""
-    inputfiles.foreach(f=> str+=f+",")
+    var str: String = ""
+    inputfiles.foreach(f => str += f + ",")
     "ReadOnly (with .cache()) test on " + inputfiles.length + " files as: " + str
   }
 }

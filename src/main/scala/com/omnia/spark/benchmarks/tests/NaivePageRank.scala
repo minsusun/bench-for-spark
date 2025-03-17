@@ -3,8 +3,9 @@ package com.omnia.spark.benchmarks.tests
 import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
-
-class NaivePageRank(val options: ParseOptions, spark: SparkSession) extends SQLTest(spark) with LogTrait{
+class NaivePageRank(val options: ParseOptions, spark: SparkSession)
+    extends SQLTest(spark)
+    with LogTrait {
 
   override def execute(): String = {
     val textFile = spark.read.textFile(options.getInputFiles()(0))
@@ -13,18 +14,21 @@ class NaivePageRank(val options: ParseOptions, spark: SparkSession) extends SQLT
     val linesRDD = textFile.rdd
     step("[NaivePageRank]Text to RDD")
 
-    val links = linesRDD.map(l => {
-      val parts = l.split("\\s+")
-      (parts(0), parts(1))
-    }).distinct().groupByKey().cache()
+    val links = linesRDD
+      .map { l =>
+        val parts = l.split("\\s+")
+        (parts(0), parts(1))
+      }
+      .distinct()
+      .groupByKey()
+      .cache()
     step("[NaivePageRank]Build Links RDD")
 
     var ranks = links.mapValues(_ => 1.0)
     step("[NaivePageRank]Rank Init")
 
-
     for (i <- 1 to options.getIterations) {
-      val contribs = links.join(ranks).values.flatMap{ case (urls, rank) =>
+      val contribs = links.join(ranks).values.flatMap { case (urls, rank) =>
         val size = urls.size
         urls.map(url => (url, rank / size))
       }

@@ -5,7 +5,9 @@ import org.apache.spark.graphx.impl.GraphImpl
 import org.apache.spark.graphx.{AuxGraphLoader, Edge, EdgeRDD, Graph, GraphLoader, VertexRDD}
 import org.apache.spark.sql.{SaveMode, SparkSession}
 
-class ParquetConversion (val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) with LogTrait {
+class ParquetConversion(val options: ParseOptions, spark: SparkSession)
+    extends SQLTest(spark)
+    with LogTrait {
 
   override def execute(): String = {
     var graph: Graph[Int, Int] = null
@@ -42,7 +44,7 @@ class ParquetConversion (val options: ParseOptions, spark:SparkSession) extends 
 
   override def plainExplain(): String = "ParquetConversion on " + options.getInputFiles()(0)
 
-  override def printAdditionalInformation():String = {
+  override def printAdditionalInformation(): String = {
     val sb = new StringBuilder()
     sb.mkString
   }
