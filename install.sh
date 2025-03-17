@@ -1,0 +1,1 @@
+mvn -DskipTests -T 1C install
