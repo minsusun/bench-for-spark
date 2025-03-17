@@ -13,7 +13,18 @@ class TestGraphLoader (val options: ParseOptions, spark: SparkSession) {
   def load(): Graph[Int, Int] = {
     val loaderName = options.getGraphLoader
     val filePath: String = options.getInputFiles()(0)
-    if (loaderName.compareToIgnoreCase("graphX") == 0 || loaderName.compareToIgnoreCase("aux") == 0) {
+    if (loaderName.compareToIgnoreCase("graphX") == 0) {
+      if (filePath.endsWith(".parquet")) {
+        throw new IllegalArgumentException("😡 Input file for GraphX(Aux) Graph Loader should not be in parquet format")
+      }
+      val loader = new GraphXGraphLoader()
+
+      val graph = loader.load(spark.sparkContext, filePath)
+
+      logString = loader.logToString
+
+      graph
+    } else if (loaderName.compareToIgnoreCase("aux") == 0) {
       if (filePath.endsWith(".parquet")) {
         throw new IllegalArgumentException("😡 Input file for GraphX(Aux) Graph Loader should not be in parquet format")
       }
