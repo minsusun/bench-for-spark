@@ -49,6 +49,7 @@ public class ParseOptions {
     private boolean naiveImplementation = false;
     private SVDPlusPlus.Conf svdppConf = new SVDPlusPlus.Conf(10, 5, 0.0, 5.0, 0.007, 0.007, 0.005, 0.015);
     private LBFGSConf lbfgsConf = new LBFGSConf(0.6, 10, 1e-4, 20, 0.1, 11L);
+    private boolean saveResult = true;
 
     public ParseOptions(){
 
@@ -83,6 +84,7 @@ public class ParseOptions {
         options.addOption("naive", "", false, "use naive implementation if available");
         options.addOption("svdppconf", "", true, "configurations to be used in SVD++(Rank: Int, MaxIterations: Int, MinValue: Double, MaxValue: Double, Gamma1: Double, Gamma2: Double, Gamma6: Double, Gamma7: Double)");
         options.addOption("lbfgsconf", "", true, "configurations to be used in LBFGS(splitRatio: Double, numCorrections: Int, convergenceTol: Double, maxNumIterations: Int, regParam: Double, seed: Long)");
+        options.addOption("save", "save", true, "whether to save the results into a file");
 
         // set defaults
         this.test = "readOnly";
@@ -271,6 +273,9 @@ public class ParseOptions {
                     warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + ConfHelpers.LBFGSConfToString(lbfgsConf));
                 }
             }
+            if (cmd.hasOption("save")) {
+                this.saveResult = Boolean.parseBoolean(cmd.getOptionValue("save"));
+            }
 
         } catch (ParseException e) {
             errorAbort("Failed to parse command line properties" + e);
@@ -405,5 +410,9 @@ public class ParseOptions {
 
     public LBFGSConf getLBFGSConf() {
         return this.lbfgsConf;
+    }
+
+    public boolean getSaveResult() {
+        return this.saveResult;
     }
 }

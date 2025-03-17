@@ -8,10 +8,12 @@ import org.apache.spark.sql.SparkSession
 class ConnectedComponents (val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) with LogTrait{
 
   override def execute(): String = {
-    val hdfsConf = spark.sparkContext.hadoopConfiguration
-    HDFSHelper.HDFSDeleteIfExists(hdfsConf, "dbg/resultVE")
-    HDFSHelper.HDFSDeleteIfExists(hdfsConf, "dbg/resultEG")
-    step("[HDFS]Clear path")
+    if (options.getSaveResult) {
+      val hdfsConf = spark.sparkContext.hadoopConfiguration
+      HDFSHelper.HDFSDeleteIfExists(hdfsConf, "dbg/resultVE")
+      HDFSHelper.HDFSDeleteIfExists(hdfsConf, "dbg/resultEG")
+      step("[HDFS]Clear path")
+    }
 
     val loader = new TestGraphLoader(options, spark)
     val graph = loader.load()
@@ -22,11 +24,13 @@ class ConnectedComponents (val options: ParseOptions, spark:SparkSession) extend
     val result = org.apache.spark.graphx.lib.ConnectedComponents.run(graph, options.getIterations)
     step("[ConnectedComponents]Execution")
 
-    result.vertices.coalesce(1).saveAsTextFile("dbg/resultVE")
-    step("[ConnectedComponents]Save resultVE")
+    if (options.getSaveResult) {
+      result.vertices.coalesce(1).saveAsTextFile("dbg/resultVE")
+      step("[ConnectedComponents]Save resultVE")
 
-    result.edges.coalesce(1).saveAsTextFile("dbg/resultEG")
-    step("[ConnectedComponents]Save resultEG")
+      result.edges.coalesce(1).saveAsTextFile("dbg/resultEG")
+      step("[ConnectedComponents]Save resultEG")
+    }
 
     "Ran ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0) + logToString
   }
