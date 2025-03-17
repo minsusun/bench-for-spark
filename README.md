@@ -1,8 +1,33 @@
 # Spark SQL Benchmarks
-A set of Spark SQL benchmarks for humans. 
+Make scala speak some time measurements from spark
 
-**Updates**   
-   * September 20, 2017: Update to Spark 2.2 and added PageRank support
+### TODO
+- [x] PR
+- [x] CC
+- [ ] LR
+- [ ] KMeans
+- [ ] GBT
+- [x] SVD++
+- [ ] ALS
+- [x] TPC-DS
+- [ ] TERASORT
+- [ ] BP
+- [ ] DECI
+- [ ] LR
+- [ ] NCF
+- [ ] MLR
+- [ ] SGBOOST
+- [ ] RF
+- [ ] SVM
+- [ ] GMM
+- [ ] ALS
+- [ ] Ranking Metrics
+- [ ] ISO
+- [x] LBFGS
+- [ ] LDA
+- [ ] BP
+- [ ] Spark-Bench Data Generator
+- [ ] HiBench Data Generator
    
 ## How to build 
 ```bash
@@ -151,16 +176,3 @@ Result         : Ran PageRank 2 iterations /soc-LiveJournal1.txt
 Graph load time: 18643 msec
 -------------------------------------------------
 ```
-
-## Contributions
-
-PRs are always welcome. Please fork, and make necessary modifications 
-you propose, and let us know. 
-
-## Contact 
-
-If you have questions or suggestions, feel free to post at:
-
-https://groups.google.com/forum/#!forum/zrlio-users
-
-or email: zrlio-users@googlegroups.com
