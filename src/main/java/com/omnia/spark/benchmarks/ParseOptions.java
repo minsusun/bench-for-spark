@@ -250,7 +250,7 @@ public class ParseOptions {
                     double gamma7 = Double.parseDouble(arr[7]);
                     svdppConf = new SVDPlusPlus.Conf(rank, maxIterations, minVal, maxVal, gamma1, gamma2, gamma6, gamma7);
                 } catch (Exception e) {
-                    warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + Helpers.SVDPlusPlusConfToString(svdppConf));
+                    warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + ConfHelpers.SVDPlusPlusConfToString(svdppConf));
                 }
             }
             if (cmd.hasOption("lbfgsconf")) {
@@ -268,7 +268,7 @@ public class ParseOptions {
                     long seed = Long.parseLong(arr[5]);
                     lbfgsConf = new LBFGSConf(splitRatio, numCorrections, convergenceTol, maxNumIterations, regParam, seed);
                 } catch (Exception e) {
-                    warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + Helpers.LBFGSConfToString(lbfgsConf));
+                    warningKeepGo("WARNING: " + e.getMessage() + "\n" + "Fall back to default values: " + ConfHelpers.LBFGSConfToString(lbfgsConf));
                 }
             }
 
