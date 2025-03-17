@@ -7,7 +7,7 @@ import org.apache.spark.graphx.{Graph, GraphLoader}
 class GraphXGraphLoader extends LogTrait{
   def load(sc: SparkContext, path: String): Graph[Int, Int] = {
     val graph = GraphLoader.edgeListFile(sc, path)
-    log("[GraphX]Load Graph")
+    step("[GraphX]Load Graph")
 
     graph
   }
