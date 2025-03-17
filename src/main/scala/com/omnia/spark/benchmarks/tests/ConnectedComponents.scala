@@ -1,12 +1,18 @@
 package com.omnia.spark.benchmarks.tests
 
 import com.omnia.spark.benchmarks.graphLoader.TestGraphLoader
+import com.omnia.spark.benchmarks.helpers.HDFSHelper
 import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
 class ConnectedComponents (val options: ParseOptions, spark:SparkSession) extends SQLTest(spark) with LogTrait{
 
   override def execute(): String = {
+    val hdfsConf = spark.sparkContext.hadoopConfiguration
+    HDFSHelper.HDFSDeleteIfExists(hdfsConf, "dbg/resultVE")
+    HDFSHelper.HDFSDeleteIfExists(hdfsConf, "dbg/resultEG")
+    step("[HDFS]Clear path")
+
     val loader = new TestGraphLoader(options, spark)
     val graph = loader.load()
 
