@@ -13,7 +13,7 @@ class ConnectedComponents (val options: ParseOptions, spark:SparkSession) extend
     concatLog(loader.explain)
     forceUpdate()
 
-    val result = org.apache.spark.graphx.lib.ConnectedComponents.run(graph, options.getPageRankIterations)
+    val result = org.apache.spark.graphx.lib.ConnectedComponents.run(graph, options.getIterations)
     step("[ConnectedComponents]Execution")
 
     result.vertices.coalesce(1).saveAsTextFile("dbg/resultVE")
@@ -22,10 +22,10 @@ class ConnectedComponents (val options: ParseOptions, spark:SparkSession) extend
     result.edges.coalesce(1).saveAsTextFile("dbg/resultEG")
     step("[ConnectedComponents]Save resultEG")
 
-    "Ran ConnectedComponents " + options.getPageRankIterations + " iterations on " + options.getInputFiles()(0) + logToString
+    "Ran ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0) + logToString
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = "ConnectedComponents " + options.getPageRankIterations + " iterations on " + options.getInputFiles()(0)
+  override def plainExplain(): String = "ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0)
 }

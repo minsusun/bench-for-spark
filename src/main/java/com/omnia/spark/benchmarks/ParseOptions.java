@@ -42,7 +42,7 @@ public class ParseOptions {
     private String outputFormat;
     private Map<String, String> inputFormatOptions;
     private Map<String, String> outputFormatOptions;
-    private int pageRankIterations = 8;
+    private int iterations = 8;
     private String graphLoader = "graphx";
     private boolean auxGraphLoader = false;
     private boolean countGraph = false;
@@ -76,7 +76,7 @@ public class ParseOptions {
         options.addOption("ifo", "inputFormatOptions", true, "input format options as key0,value0,key1,value1...");
         options.addOption("of", "outputFormat", true, "output format (where-ever applicable) default: parquet");
         options.addOption("ofo", "outputFormatOptions", true, "output format options as key0,value0,key1,value1...");
-        options.addOption("gi", "graphPRIterations", true, "number of iteration for the PageRank algorithm, default " + this.pageRankIterations);
+        options.addOption("iter", "iterations", true, "number of iteration for iterative tests, default " + this.iterations);
         options.addOption("gl", "graphLoader", true, "which graph loader to use loading the graph");
         options.addOption("aux", "auxGraphLoader", false, "whether to use auxiliary graph loader");
         options.addOption("count", "", false, "whether to count the vertices and edges of the graph");
@@ -143,8 +143,8 @@ public class ParseOptions {
                     this.action = new Noop();
                 }
             }
-            if(cmd.hasOption("gi")){
-                this.pageRankIterations = Integer.parseInt(cmd.getOptionValue("gi").trim());
+            if(cmd.hasOption("iter")){
+                this.iterations = Integer.parseInt(cmd.getOptionValue("iter").trim());
             }
             if(cmd.hasOption("v")){
                 this.verbose = true;
@@ -379,8 +379,8 @@ public class ParseOptions {
     public String getTPCDSQuery(){
         return this.tpcdsQuery;
     }
-    public int getPageRankIterations(){
-        return this.pageRankIterations;
+    public int getIterations(){
+        return this.iterations;
     }
 
     public boolean getAuxGraphLoader(){

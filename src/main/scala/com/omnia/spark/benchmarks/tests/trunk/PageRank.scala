@@ -36,13 +36,13 @@ class PageRank (val options: ParseOptions, spark:SparkSession) extends SQLTest(s
 
   override def execute(): String = {
     /* we don't have to take any action from the datasets */
-    org.apache.spark.graphx.lib.PageRank.run(this.graph, options.getPageRankIterations)
-    "Ran PageRank " + options.getPageRankIterations + " iterations on " + options.getInputFiles()(0)
+    org.apache.spark.graphx.lib.PageRank.run(this.graph, options.getIterations)
+    "Ran PageRank " + options.getIterations + " iterations on " + options.getInputFiles()(0)
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = "PageRank " + options.getPageRankIterations + " iterations on " + options.getInputFiles()(0)
+  override def plainExplain(): String = "PageRank " + options.getIterations + " iterations on " + options.getInputFiles()(0)
 
   override def printAdditionalInformation():String = {
     val sb = new StringBuilder()

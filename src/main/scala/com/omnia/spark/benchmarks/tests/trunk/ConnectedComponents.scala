@@ -12,16 +12,16 @@ class ConnectedComponents(val options: ParseOptions, spark:SparkSession) extends
 
   override def execute(): String = {
     /* we don't have to take any action from the datasets */
-    val result = org.apache.spark.graphx.lib.ConnectedComponents.run(this.graph, options.getPageRankIterations)
+    val result = org.apache.spark.graphx.lib.ConnectedComponents.run(this.graph, options.getIterations)
     result.vertices.coalesce(1).saveAsTextFile("dbg/resultVE")
     result.edges.coalesce(1).saveAsTextFile("dbg/resultEG")
 
-    "Ran ConnectedComponents " + options.getPageRankIterations + " iterations on " + options.getInputFiles()(0)
+    "Ran ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0)
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = "ConnectedComponents " + options.getPageRankIterations + " iterations on " + options.getInputFiles()(0)
+  override def plainExplain(): String = "ConnectedComponents " + options.getIterations + " iterations on " + options.getInputFiles()(0)
 
   override def printAdditionalInformation():String = {
     val sb = new StringBuilder()

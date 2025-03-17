@@ -13,13 +13,13 @@ class PageRank (val options: ParseOptions, spark: SparkSession) extends SQLTest(
     concatLog(loader.explain)
     forceUpdate()
 
-    org.apache.spark.graphx.lib.PageRank.run(graph, options.getPageRankIterations)
+    org.apache.spark.graphx.lib.PageRank.run(graph, options.getIterations)
     step("[PageRank]Execution")
 
-    "Ran PageRank " + options.getPageRankIterations + " iterations on " + options.getInputFiles()(0) + logToString
+    "Ran PageRank " + options.getIterations + " iterations on " + options.getInputFiles()(0) + logToString
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = s"Page Rank ${options.getPageRankIterations} iterations on ${options.getInputFiles()(0)}"
+  override def plainExplain(): String = s"Page Rank ${options.getIterations} iterations on ${options.getInputFiles()(0)}"
 }
