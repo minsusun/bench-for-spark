@@ -51,7 +51,7 @@ public class ParseOptions {
     private LBFGSConf lbfgsConf = new LBFGSConf(0.6, 10, 1e-4, 20, 0.1, 11L);
     private boolean saveResult = true;
 
-    public ParseOptions(){
+    public ParseOptions() {
 
         this.banner = " _____  _____ _       ______                 _                          _    \n" +
                 "/  ___||  _  | |      | ___ \\               | |                        | |   \n" +
@@ -133,85 +133,85 @@ public class ParseOptions {
                 show_help();
                 System.exit(0);
             }
-            if(cmd.hasOption("t")){
+            if (cmd.hasOption("t")) {
                 this.test = cmd.getOptionValue("t").trim();
-                if(this.test.charAt(0) == 'q'){
+                if (this.test.charAt(0) == 'q') {
                     /* specific query test */
                     this.tpcdsQuery = this.test;
                 }
-                if(this.isTestPageRank() || this.isTestConnectedComponents() ||
-                        this.isParquetConversion() || this.isParquetGraphLoadTest()){
+                if (this.isTestPageRank() || this.isTestConnectedComponents() ||
+                        this.isParquetConversion() || this.isParquetGraphLoadTest()) {
                     /* for page rank, we have no op */
                     this.action = new Noop();
                 }
             }
-            if(cmd.hasOption("iter")){
+            if (cmd.hasOption("iter")) {
                 this.iterations = Integer.parseInt(cmd.getOptionValue("iter").trim());
             }
-            if(cmd.hasOption("v")){
+            if (cmd.hasOption("v")) {
                 this.verbose = true;
             }
-            if(cmd.hasOption("k")){
+            if (cmd.hasOption("k")) {
                 this.joinKey = cmd.getOptionValue("k").trim();
             }
-            if(cmd.hasOption("if")){
+            if (cmd.hasOption("if")) {
                 this.inputFormat = cmd.getOptionValue("if").trim();
-                if(this.inputFormat.compareToIgnoreCase("nullio") == 0){
+                if (this.inputFormat.compareToIgnoreCase("nullio") == 0) {
                     this.inputFormat = "org.apache.spark.sql.NullFileFormat";
                 }
             }
-            if(cmd.hasOption("of")){
+            if (cmd.hasOption("of")) {
                 this.outputFormat = cmd.getOptionValue("of").trim();
-                if(this.outputFormat.compareToIgnoreCase("nullio") == 0){
+                if (this.outputFormat.compareToIgnoreCase("nullio") == 0) {
                     this.inputFormat = "org.apache.spark.sql.NullFileFormat";
                 }
             }
-            if(cmd.hasOption("ofo")){
+            if (cmd.hasOption("ofo")) {
                 String[] one = cmd.getOptionValue("ofo").trim().split(",");
-                if(one.length % 2 != 0){
+                if (one.length % 2 != 0) {
                     errorAbort("Illegal format for outputFormatOptions. Number of parameters " + one.length + " are not even");
                 }
-                for(int i = 0; i < one.length; i+=2){
+                for (int i = 0; i < one.length; i += 2) {
                     this.outputFormatOptions.put(one[i].trim(), one[i + 1].trim());
                 }
             }
-            if(cmd.hasOption("ifo")){
+            if (cmd.hasOption("ifo")) {
                 String[] one = cmd.getOptionValue("ifo").trim().split(",");
-                if(one.length % 2 != 0){
+                if (one.length % 2 != 0) {
                     errorAbort("Illegal format for inputFormatOptions. Number of parameters " + one.length + " are not even");
                 }
-                for(int i = 0; i < one.length; i+=2){
+                for (int i = 0; i < one.length; i += 2) {
                     this.inputFormatOptions.put(one[i].trim(), one[i + 1].trim());
                 }
             }
 
-            if(cmd.hasOption("i")){
+            if (cmd.hasOption("i")) {
                 // get the value and split it
                 this.inputFiles = Arrays.stream(cmd.getOptionValue("i").split(","))
                         .map(String::trim).toArray(String[]::new);
             }
-            if(cmd.hasOption("w")){
+            if (cmd.hasOption("w")) {
                 // get the value and split it
                 this.warmupInputFiles = Arrays.stream(cmd.getOptionValue("w").split(","))
                         .map(String::trim).toArray(String[]::new);
                 this.doWarmup = true;
             }
-            if(cmd.hasOption("a")){
+            if (cmd.hasOption("a")) {
                 String[] tokens = cmd.getOptionValue("a").split(",");
-                if(tokens.length == 0) {
+                if (tokens.length == 0) {
                     errorAbort("Failed to parse command line properties " + cmd.getOptionValue("a"));
                 }
-                if(tokens[0].compareToIgnoreCase("count") == 0){
+                if (tokens[0].compareToIgnoreCase("count") == 0) {
                     this.action = new Count();
-                } else if(tokens[0].compareToIgnoreCase("collect") == 0) {
+                } else if (tokens[0].compareToIgnoreCase("collect") == 0) {
                     int items = 0;
-                    if(tokens.length != 2) {
+                    if (tokens.length != 2) {
                         items = 100;
                     } else {
                         items = Integer.parseInt(tokens[1].trim());
                     }
                     this.action = new Collect(items);
-                } else if(tokens[0].compareToIgnoreCase("save") == 0) {
+                } else if (tokens[0].compareToIgnoreCase("save") == 0) {
                     String fileName = (tokens.length >= 2) ? tokens[1].trim() : "/sql-benchmark-output";
                     this.action = new Save(fileName);
                 } else {
@@ -223,8 +223,7 @@ public class ParseOptions {
             }
             if (cmd.hasOption("gl")) {
                 this.graphLoader = cmd.getOptionValue("gl").trim().toLowerCase();
-            }
-            else {
+            } else {
                 if (this.inputFiles[0].endsWith(".parquet")) {
                     this.graphLoader = "parquet";
                 }
@@ -281,7 +280,7 @@ public class ParseOptions {
             errorAbort("Failed to parse command line properties" + e);
         }
         // if not files are set
-        if(this.inputFiles == null) {
+        if (this.inputFiles == null) {
             errorAbort("ERROR:" + " please specify some input files for the SQL test");
         }
         // check valid test names
@@ -292,28 +291,28 @@ public class ParseOptions {
             errorAbort("ERROR: illegal test name : " + this.test);
         }
         /* some sanity checks */
-        if(isTestEquiJoin() && this.inputFiles.length != 2){
+        if (isTestEquiJoin() && this.inputFiles.length != 2) {
             errorAbort("ERROR:" + this.test + " needs two files as inputs");
         }
     }
 
-    public boolean isTestEquiJoin(){
+    public boolean isTestEquiJoin() {
         return this.test.compareToIgnoreCase("EquiJoin") == 0;
     }
 
-    public boolean isTestQuery(){
+    public boolean isTestQuery() {
         return !(this.tpcdsQuery == null);
     }
 
-    public boolean isTestTPCDS(){
+    public boolean isTestTPCDS() {
         return (this.test.compareToIgnoreCase("tpcds") == 0);
     }
 
-    public boolean isTestReadOnly(){
+    public boolean isTestReadOnly() {
         return this.test.compareToIgnoreCase("readOnly") == 0;
     }
 
-    public boolean isTestPageRank(){
+    public boolean isTestPageRank() {
         return this.test.compareToIgnoreCase("pagerank") == 0;
     }
 
@@ -337,19 +336,19 @@ public class ParseOptions {
         return this.test.compareToIgnoreCase("LBFGS") == 0;
     }
 
-    public String[] getInputFiles(){
+    public String[] getInputFiles() {
         return this.inputFiles;
     }
 
-    public void setInputFiles(String[] input){
+    public void setInputFiles(String[] input) {
         this.inputFiles = input;
     }
 
-    public String[] getWarmupInputFiles(){
+    public String[] getWarmupInputFiles() {
         return this.warmupInputFiles;
     }
 
-    public boolean getDoWarmup(){
+    public boolean getDoWarmup() {
         return this.doWarmup;
     }
 
@@ -357,42 +356,43 @@ public class ParseOptions {
         return this.joinKey;
     }
 
-    public Action getAction(){
+    public Action getAction() {
         return this.action;
     }
 
-    public boolean getVerbose(){
+    public boolean getVerbose() {
         return this.verbose;
     }
 
-    public String getInputFormat(){
+    public String getInputFormat() {
         return this.inputFormat;
     }
 
-    public String getOutputFormat(){
+    public String getOutputFormat() {
         return this.outputFormat;
     }
 
-    public Map<String, String> getInputFormatOptions(){
+    public Map<String, String> getInputFormatOptions() {
         return this.inputFormatOptions;
     }
 
-    public Map<String, String> getOutputFormatOptions(){
+    public Map<String, String> getOutputFormatOptions() {
         return this.outputFormatOptions;
     }
 
-    public String getTPCDSQuery(){
+    public String getTPCDSQuery() {
         return this.tpcdsQuery;
     }
-    public int getIterations(){
+
+    public int getIterations() {
         return this.iterations;
     }
 
-    public boolean getAuxGraphLoader(){
+    public boolean getAuxGraphLoader() {
         return this.auxGraphLoader;
     }
 
-    public String getGraphLoader(){
+    public String getGraphLoader() {
         return this.graphLoader;
     }
 
