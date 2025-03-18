@@ -140,7 +140,8 @@ public class ParseOptions {
                     this.tpcdsQuery = this.test;
                 }
                 if (this.isTestPageRank() || this.isTestConnectedComponents() ||
-                        this.isParquetConversion() || this.isParquetGraphLoadTest()) {
+                        this.isParquetConversion() || this.isParquetGraphLoadTest() ||
+                        this.isLBFGS() || this.isSVDPlusPlus()) {
                     /* for page rank, we have no op */
                     this.action = new Noop();
                 }
