@@ -22,10 +22,14 @@ class TestGraphLoader(val options: ParseOptions, spark: SparkSession) {
       val loader = new GraphXGraphLoader()
 
       val graph = loader.load(spark.sparkContext, filePath)
+      loader.step("[GraphXGraphLoader]Load Graph")
+
+      val cachedGraph = graph.cache()
+      loader.step("[GraphXGraphLoader]Graph Cache")
 
       logString = loader.logToString
 
-      graph
+      cachedGraph
     } else if (loaderName.compareToIgnoreCase("aux") == 0) {
       if (filePath.endsWith(".parquet")) {
         throw new IllegalArgumentException(
@@ -37,12 +41,12 @@ class TestGraphLoader(val options: ParseOptions, spark: SparkSession) {
       val graph = loader.edgeListFile(spark.sparkContext, filePath)
       loader.step("[AuxGraphLoader]Build Graph From Edge Partitions")
 
-      val _ = graph.cache()
+      val cachedGraph = graph.cache()
       loader.step("[AuxGraphLoader]Graph Cache")
 
       logString = loader.logToString
 
-      graph
+      cachedGraph
     } else if (loaderName.compareToIgnoreCase("parquet") == 0) {
       assert(filePath.endsWith(".parquet"), "😡 Given file is not parquet format")
 
@@ -51,12 +55,12 @@ class TestGraphLoader(val options: ParseOptions, spark: SparkSession) {
       val graph = loader.load(spark, filePath)
       loader.step("[ParquetGraphLoader]Reconstruct Graph From Existing RDDs")
 
-      val _ = graph.cache()
+      val cachedGraph = graph.cache()
       loader.step("[ParquetGraphLoader]Graph Cache")
 
       logString = loader.logToString
 
-      graph
+      cachedGraph
     } else {
       throw new IllegalArgumentException("Wrong Graph Loader Name Given " + loaderName)
     }
