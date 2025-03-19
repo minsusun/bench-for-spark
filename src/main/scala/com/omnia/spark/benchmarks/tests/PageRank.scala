@@ -1,6 +1,6 @@
 package com.omnia.spark.benchmarks.tests
 
-import com.omnia.spark.benchmarks.graphLoader.TestGraphLoader
+import com.omnia.spark.benchmarks.graphloader.TestGraphLoader
 import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 

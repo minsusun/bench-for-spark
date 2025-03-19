@@ -1,4 +1,4 @@
-package com.omnia.spark.benchmarks.graphLoader
+package com.omnia.spark.benchmarks.graphloader
 
 import com.omnia.spark.benchmarks.LogTrait
 import org.apache.spark.graphx.{Edge, Graph}

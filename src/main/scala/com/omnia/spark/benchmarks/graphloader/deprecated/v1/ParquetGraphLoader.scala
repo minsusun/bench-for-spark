@@ -1,4 +1,4 @@
-package com.omnia.spark.benchmarks.graphLoader.deprecated.v1
+package com.omnia.spark.benchmarks.graphloader.deprecated.v1
 
 import com.omnia.spark.benchmarks.LogTrait
 import org.apache.spark.graphx.impl.GraphImpl
