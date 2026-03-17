@@ -4,7 +4,7 @@ import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
 
 class NaivePageRank(val options: ParseOptions, spark: SparkSession)
-    extends SQLTest(spark)
+  extends SQLTest(spark)
     with LogTrait {
 
   override def execute(): String = {
@@ -27,15 +27,20 @@ class NaivePageRank(val options: ParseOptions, spark: SparkSession)
     var ranks = links.mapValues(_ => 1.0)
     step("[NaivePageRank]Rank Init")
 
+    var prevRanks: org.apache.spark.rdd.RDD[(String, Double)] = null
     for (i <- 1 to options.getIterations) {
+      prevRanks = ranks
+
       val contribs = links.join(ranks).values.flatMap { case (urls, rank) =>
         val size = urls.size
         urls.map(url => (url, rank / size))
       }
-      step(s"[NaivePageRank]Iteration ${i}: Contribs build")
 
       ranks = contribs.reduceByKey(_ + _).mapValues(0.15 + 0.85 * _)
-      step(s"[NaivePageRank]Iteration ${i}: Calculate Rank")
+      ranks.cache()
+      ranks.foreachPartition { _ => } // materialize
+      prevRanks.unpersist()
+      step(s"[NaivePageRank]Iteration ${i}")
     }
 
     val output = ranks.collect()
