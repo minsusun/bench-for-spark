@@ -29,6 +29,7 @@ class NaivePageRank(val options: ParseOptions, spark: SparkSession)
 
     var prevRanks: org.apache.spark.rdd.RDD[(String, Double)] = null
     for (i <- 1 to options.getIterations) {
+      ranks.cache()
       prevRanks = ranks
 
       val contribs = links.join(ranks).values.flatMap { case (urls, rank) =>
@@ -43,6 +44,7 @@ class NaivePageRank(val options: ParseOptions, spark: SparkSession)
       step(s"[NaivePageRank]Iteration ${i}")
     }
 
+    links.unpersist()
     val output = ranks.collect()
     step(s"[NaivePageRank]Rank Collect")
 
