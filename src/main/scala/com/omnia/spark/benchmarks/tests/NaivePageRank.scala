@@ -1,57 +1,38 @@
 package com.omnia.spark.benchmarks.tests
 
+import com.omnia.spark.benchmarks.graphloader.TestGraphLoader
 import com.omnia.spark.benchmarks.{LogTrait, ParseOptions, SQLTest}
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.graphx.PartitionStrategy // ★ 추가된 임포트
 
 class NaivePageRank(val options: ParseOptions, spark: SparkSession)
   extends SQLTest(spark)
     with LogTrait {
 
   override def execute(): String = {
-    val textFile = spark.read.textFile(options.getInputFiles()(0))
-    step("[NaivePageRank]Text File Read")
+    val loader = new TestGraphLoader(options, spark)
+    // 1. 원본 그래프 로드
+    val rawGraph = loader.load()
 
-    val linesRDD = textFile.rdd
-    step("[NaivePageRank]Text to RDD")
+    concatLog(loader.explain)
+    forceUpdate()
 
-    val links = linesRDD
-      .map { l =>
-        val parts = l.split("\\s+")
-        (parts(0), parts(1))
-      }
-      .distinct()
-      .groupByKey()
-      .cache()
-    step("[NaivePageRank]Build Links RDD")
+    // 2. ★ [핵심] 2D 파티셔닝을 끄고 1D 파티셔닝(Source 기반)으로 강제 재정렬
+    val partitionedGraph = rawGraph.partitionBy(PartitionStrategy.EdgePartition1D)
+    step("[PageRank] Apply 1D Partitioning")
 
-    var ranks = links.mapValues(_ => 1.0)
-    step("[NaivePageRank]Rank Init")
+    // 3. 파티셔닝이 완료된 그래프를 PageRank 알고리즘에 주입
+    org.apache.spark.graphx.lib.PageRank.run(partitionedGraph, options.getIterations)
+    step("[PageRank] Execution")
 
-    var prevRanks: org.apache.spark.rdd.RDD[(String, Double)] = null
-    for (i <- 1 to options.getIterations) {
-      ranks.cache()
-      prevRanks = ranks
-
-      val contribs = links.join(ranks).values.flatMap { case (urls, rank) =>
-        val size = urls.size
-        urls.map(url => (url, rank / size))
-      }
-
-      ranks = contribs.reduceByKey(_ + _).mapValues(0.15 + 0.85 * _)
-      ranks.cache()
-      ranks.foreachPartition { _ => } // materialize
-      prevRanks.unpersist()
-      step(s"[NaivePageRank]Iteration ${i}")
-    }
-
-    links.unpersist()
-    val output = ranks.collect()
-    step(s"[NaivePageRank]Rank Collect")
-
-    s"Rank Naive PageRank on ${options.getInputFiles()(0)}" + logToString
+    "Ran PageRank (1D Partitioned) " + options.getIterations + " iterations on " + options
+      .getInputFiles()(
+        0
+      ) + logToString
   }
 
   override def explain(): Unit = println(plainExplain())
 
-  override def plainExplain(): String = "NaivePageRank"
+  override def plainExplain(): String =
+    s"Page Rank (1D Partitioned) ${options.getIterations} iterations on ${options.getInputFiles()(0)}"
 }
